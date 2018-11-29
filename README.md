@@ -1,2 +1,3 @@
 # LifeOfJona.github.io
-My website
+
+Creating my Website while learning HTML.
