@@ -1,3 +1,3 @@
-# LifeOfJona.github.io
+# Jona Sahota's Website
 
-Creating my Website while learning HTML.
+Essentially creating a Website while trying to learn HTML.
