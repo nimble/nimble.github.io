@@ -1,58 +1,77 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>LifeOfJona</title>
-		<meta charset="utf-8" />
-		<meta name="description" content="Hi, I'm Jona Sahota.">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		  <!-- Global site tag (gtag.js) - Google Analytics -->
-		  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148034866-1"></script>
-		  <script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-		
-			gtag('config', 'UA-148034866-1');
-      </script>
-      
-	</head>
-	<body class="is-preload">
-		<div id="wrapper">
-			<div id="bg"></div>
-			<!-- <div id="overlay"></div> -->
-			<div id="main">
-				<!-- Header -->
-					<header id="header">
-						<h1>Jona Sahota</h1>
-						<p>Developer &nbsp;&bull;&nbsp; Athlete &nbsp;&bull;&nbsp; "La Crème De La Crème!"</p>
-						<nav>
-							<ul>
-								<li><a href="https://twitter.com/JonaSahota" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="https://stackoverflow.com/users/10730344/lifeofjona?tab=profile" class="icon brands fa-stack-overflow"><span class="label">StackOverFlow</span></a></li>
-								<li><a href="https://github.com/LifeOfJona" class="icon brands fa-github"><span class="label">Github</span></a></li>
-								<li><a href="mailto:LifeOfJona@hotmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-							</ul>
-						</nav>
-					</header>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<span class="copyright">&copy; Jona Sahota.</span>
-					</footer>
+<head>
+	<title>LifeOfJona</title>
+	<meta charset="utf-8" />
+	<meta name="description" content="Hi, I'm Jona Sahota.">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148034866-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-			</div>
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-148034866-1');
+	</script>
+
+
+</head>
+
+<body class="is-preload">
+	<div id="wrapper">
+		<div id="bg"></div>
+		<!-- <div id="overlay"></div> -->
+		<div id="main">
+			<!-- Header -->
+			<header id="header">
+				<h1>Jona Sahota</h1>
+				<p>Developer &nbsp;&bull;&nbsp; Athlete &nbsp;&bull;&nbsp; "La Crème De La Crème!"</p>
+				<nav>
+					<ul>
+						<li><a href="https://twitter.com/JonaSahota" class="icon brands fa-twitter"><span
+									class="label">Twitter</span></a></li>
+						<li><a href="https://stackoverflow.com/users/10730344/lifeofjona?tab=profile"
+								class="icon brands fa-stack-overflow"><span class="label">StackOverFlow</span></a></li>
+						<li><a href="https://github.com/LifeOfJona" class="icon brands fa-github"><span
+									class="label">Github</span></a></li>
+						<li><a href="mailto:LifeOfJona@hotmail.com" class="icon solid fa-envelope"><span
+									class="label">Email</span></a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<!-- Footer -->
+			<footer id="footer">
+				<span class="copyright">&copy; Jona Sahota.</span>
+			</footer>
+
 		</div>
-		<script>
-			window.onload = function() { document.body.classList.remove('is-preload'); }
-			window.ontouchmove = function() { return false; }
-			window.onorientationchange = function() { document.body.scrollTop = 0; }
-    </script>
-    
+	</div>
+	<script>
+		window.onload = function () {
+			document.body.classList.remove('is-preload');
+		}
+		window.ontouchmove = function () {
+			return false;
+		}
+		window.onorientationchange = function () {
+			document.body.scrollTop = 0;
+		}
+	</script>
 
-	</body>
-	<audio src="audio.mp3">
-		<p>If you are reading this, it is because your browser does not support the audio element.</p>
-		</audio>
+</body>
+
+<audio autoplay="autoplay" controls="controls">
+	<source src="audio/audio.mp3" />
+</audio>
+
+
 </html>
