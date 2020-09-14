@@ -1,16 +1,12 @@
 <!DOCTYPE HTML>
-<!-- Just a Test 
-	1. Music Works 
-	2. Resizing needs modifications
--->
+
 <html>
-	
+
 <head>
 	<title>LifeOfJona</title>
 	<meta charset="utf-8" />
 	<meta name="description" content="Hi, I'm Jona Sahota.">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -25,54 +21,85 @@
 
 		gtag('config', 'UA-148034866-1');
 	</script>
+	<!-- Links Import-->
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/typing.css">
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600;700&display=swap"
+		rel="stylesheet">
+
+	<!-- Script Imports-->	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+	</script>
+	<script src="myscripts.js"></script>
+	<script src="js/smoothing.js"></script>
 
 
+	<!-- Meta Here.-->
+	<!-- <h1 class="title">Life Of Jona :)</h1> -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-155095624-1"></script>
+	<meta charset="utf-8">
+	<title>Jona Sahota</title>
+	<link rel="shortcut icon" type="image/ico" href="images/favicon.ico">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="theme-color" content="#000000">
+	<meta name="description" content="Jona Sahota's Site.">
+	<meta name="keywords" content="LifeOfJona, JonaSahota, Jona Sahota">
+	<meta property="og:url" content="https://LifeOfJona.ca">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Jona Sahota">
+	<meta property="og:description" content="Jona Sahota's Site.">
+	<meta property="og:image" content="images/Palwin97 Commish 2.png">
+	<link rel="manifest" href="/manifest.json">
 </head>
 
-<body class="is-preload">
-	<div id="wrapper">
-		<!-- <div id="overlay"></div> -->
-		<div id="main">
-			<div id="bg"></div>
-			<!-- Header -->
-			<header id="header">
-				<h1>Jona Sahota</h1>
-				<p>&nbsp; "La Crème De La Crème!"</p>
-				<nav>
-					<ul>
-						<li><a href="https://twitter.com/JonaSahota" class="icon brands fa-twitter"><span
-									class="label">Twitter</span></a></li>
-						<li><a href="https://stackoverflow.com/users/10730344/lifeofjona?tab=profile"
-								class="icon brands fa-stack-overflow"><span class="label">StackOverFlow</span></a></li>
-						<li><a href="https://github.com/LifeOfJona" class="icon brands fa-github"><span
-									class="label">Github</span></a></li>
-						<li><a href="mailto:LifeOfJona@hotmail.com" class="icon solid fa-envelope"><span
-									class="label">Email</span></a></li>
-					</ul>
-				<audio name="myMusic" src="gang.mp3" autoplay></audio>
-				</nav>
-			</header>
+<noscript>You need to enable JavaScript to run this app.</noscript>
 
-			<!-- Footer -->
-			<footer id="footer">
-				<span class="copyright">&copy; Jona Sahota.</span>
-			</footer>
+<body>
+	<div id="intro">
+		<h1 class="typewriter hvr-bob">Hey, I'm Jona.</h1>
+		<h2>Welcome to my website.</h2>
+		<h2 id="summary" class="hvr-bounce-in">4A Computer Science
+			<br>Wilfrid Laurier University
+			<br>Cambridge, ON
+		</h2>
 
-		</div>
+		<h3>Keep scrolling to learn more about me and my work!</h3>
+		<a href="#about">
+			<i class='fas fa-angle-double-down arrow bounce-1' style='font-size:20px'></i>
+		</a>
 	</div>
-	
-	<script>
-		window.onload = function () {
-			document.body.classList.remove('is-preload');
-		}
-		window.ontouchmove = function () {
-			return false;
-		}
-		window.onorientationchange = function () {
-			document.body.scrollTop = 0;
-		}
-	</script>
+
+	<div id="about">
+		<div class="row">
+			<div class="col-md-5" id="image">
+				<img src="images/Palwin97 Commish 2.png" class="img-fluid hvr-glow" alt="" id="profile">
+			</div>
+			<div class="col-md-7">
+				<h1>👩‍💻 About Me</h1>
+				<p>My name is Tianhui, pronounced "tee-an-hway" and I am a Computer Science student at uWaterloo who is
+					passionate
+					about learning innovative technologies to make cool <a href="#projects">projects</a> that can
+					(hopefully) impact the world.</p>
+				<p>When I'm not coding or completing coursework, I enjoy running, playing volleyball with friends,
+					learning new recipes and playing pieces on the piano. Fun fact: I used to teach piano! I am also
+					very interested in learning about fashion trends and discovering creative ways to style simple
+					clothing items.</p>
+				<p>In addition to my coding experience, I have an extensive leadership background. Keep scrolling to
+					learn more about my <a href="#experience">experiences.</a> Feel free to also connect with me on <a
+						href="https://www.linkedin.com/in/jonasahota/" target="_blank">LinkedIn!</a></p>
+			</div>
+		</div>
+
+
+
 
 </body>
+
 
 </html>
