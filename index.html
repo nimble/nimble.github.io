@@ -30,7 +30,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600;700&display=swap"
 		rel="stylesheet">
 
-	<!-- Script Imports-->	
+	<!-- Script Imports-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
@@ -61,39 +61,66 @@
 <noscript>You need to enable JavaScript to run this app.</noscript>
 
 <body>
-	<div id="intro">
-		<h1 class="typewriter hvr-bob">Hey, I'm Jona.</h1>
-		<h2>Welcome to my website.</h2>
-		<h2 id="summary" class="hvr-bounce-in">4A Computer Science
-			<br>Wilfrid Laurier University
-			<br>Cambridge, ON
-		</h2>
+	<div id="root">
+		<div class="App">
+			<a class="ant-dropdown-trigger hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+					viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+					stroke-linejoin="round">
+					<line x1="3" y1="12" x2="21" y2="12"></line>
+					<line x1="3" y1="6" x2="21" y2="6"></line>
+					<line x1="3" y1="18" x2="21" y2="18"></line>
+				</svg></a>
 
-		<h3>Keep scrolling to learn more about me and my work!</h3>
-		<a href="#about">
-			<i class='fas fa-angle-double-down arrow bounce-1' style='font-size:20px'></i>
-		</a>
-	</div>
+			<ul class="ant-menu ant-menu-light ant-menu-root ant-menu-vertical" role="menu">
+			</ul>
 
-	<div id="about">
-		<div class="row">
-			<div class="col-md-5" id="image">
-				<img src="images/Palwin97 Commish 2.png" class="img-fluid hvr-glow" alt="" id="profile">
+
+			<div id="intro">
+				<h1 class="typewriter hvr-bob">Hey, I'm Jona.</h1>
+				<h2>Welcome to my website.</h2>
+				<h2 id="summary" class="hvr-bounce-in">
+					Computer Science Student
+					<br>@Wilfrid Laurier University
+					<br>Cambridge, ON
+				</h2>
+
+				<h3>Keep scrolling to learn more about me and my work!</h3>
+				<a href="#about">
+					<i class='fas fa-angle-double-down arrow bounce-1' style='font-size:20px'></i>
+				</a>
 			</div>
-			<div class="col-md-7">
-				<h1>About Me</h1>
-				<p>My name is Jona Sahota and I am a Computer Science student at Wilfrid Laurier University.
-					Currently in 4A with a Co-Op term still remaining (Looking for a 2021 Spring Co-Op placement!).
-					</p>
-				<p>When I'm not coding or completing schoolwork, I enjoy working out, reading books, solving Rubix Cube's
-					and vibing to good music 🎵.
-				</p>
-				<p>Feel free to also connect with me on <a
-						href="https://www.linkedin.com/in/jonasahota/" target="_blank">LinkedIn!</a></p>
+
+			<div id="about">
+				<div class="row">
+					<div class="col-md-5" id="image">
+						<img src="images/Palwin97 Commish 2.png" class="img-fluid hvr-glow" alt="" id="profile">
+					</div>
+					<div class="col-md-7">
+						<h1>About Me</h1>
+						<p>My name is Jona Sahota and I am a Computer Science student at Wilfrid Laurier University.
+							Currently in 4A with a Co-Op term still remaining (Looking for a 2021 Spring Co-Op
+							placement!).
+						</p>
+						<p>When I'm not coding or completing schoolwork, I enjoy working out, reading books, solving
+							Rubix
+							Cube's
+							and vibing to good music 🎵.
+						</p>
+						<p>Feel free to also connect with me on <a href="https://www.linkedin.com/in/jonasahota/"
+								target="_blank">LinkedIn!</a></p>
+					</div>
+				</div>
+			</div>
+			<div id="experience">
+				<div class="row">
+					<h1>experience</h1>
+				</div>
+
 			</div>
 		</div>
-
-
+		<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+		<script src="js/index.js"></script> <!-- Ant Design?-->
 
 
 </body>
