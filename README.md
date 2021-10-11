@@ -1,4 +1,4 @@
-# LifeOfJona.ca
-LifeOfJona Website
+# Jiglo.ca
+Jona's Website
 
-https://lifeofjona.ca
+https://Jiglo.ca
