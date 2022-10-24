@@ -30,3 +30,4 @@ root/
 - Get site SSL
 - Timeline
 - Inspiration
+- Quotes [x]
