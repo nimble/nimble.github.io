@@ -28,3 +28,5 @@ root/
 - Motivation Section
 - Usage Section (Various Tools)
 - Get site SSL
+- Timeline
+- Inspiration
