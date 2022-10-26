@@ -1,3 +1,32 @@
-body {
-    max-width: 860px;
+@font-face {
+font-family: 'KGSecondChancesSketch';
+src: local('KGSecondChancesSketch'), url(/fonts/KGSecondChancesSketch.ttf) format('truetype');
 }
+
+html, body {
+font-family: 'Alegreya Sans';
+font-style: normal;
+font-weight: 400;
+}
+
+h1, h2, h2, h4, h5 {
+font-family: 'KGSecondChancesSketch';
+font-weight: lighter;
+}
+
+.container {
+margin: 0 auto;
+max-width: 50em;
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Orange star */
+/*:link { color: #DC8C15; }
+:visited { color: #9a6a31; }*/
+
+/* Space background */
+:link { color: #6860ce; }
+:visited { color: #48456d; }
+    
