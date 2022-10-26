@@ -24,10 +24,10 @@ root/
 - Tutorial Section
 - Videos
 - Career Links
-- Vague Links
+- Vague Links [x]
 - Motivation Section
 - Usage Section (Various Tools)
-- Get site SSL
+- Get site SSL [x]
 - Timeline
 - Inspiration
 - Quotes [x]
