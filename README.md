@@ -31,3 +31,4 @@ root/
 - Timeline
 - Inspiration
 - Quotes [x]
+- Anime Section?
