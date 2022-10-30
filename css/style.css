@@ -22,11 +22,32 @@ max-width: 50em;
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* Orange star */
-/*:link { color: #DC8C15; }
-:visited { color: #9a6a31; }*/
-
-/* Space background */
+/* Link / Links Visited */
 :link { color: #6860ce; }
 :visited { color: #48456d; }
-    
+
+/* Quotes CSS */
+blockquote {
+background: #f9f9f9;
+margin: 1.5em 10px;
+padding: 0.1em 10px;
+}
+blockquote:before {
+    color: rgb(0, 0, 0);
+    content: open-quote;
+    font-size: 2em;
+    line-height: 0.0em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+blockquote::after {
+    color: rgb(0, 0, 0);
+    content: close-quote;
+    font-size: 2em;
+    line-height: 0.0em;
+    margin-left: 0.25em;
+    vertical-align: -0.4em;
+  }
+blockquote p {
+    display: inline;
+  }
