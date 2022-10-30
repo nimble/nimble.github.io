@@ -36,7 +36,6 @@ ___
 - Usage Section (Various Tools)
 - Get site SSL [x]
 - Timeline
-- Inspiration
 - Quotes [x]
-- Anime Section []
+- Anime Section [x]
 - Books []
