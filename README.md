@@ -25,17 +25,13 @@ root/
 ```
 ___
 ## TODO:
-- Blogs
-- Fix About Me
-- Quotes Section
-- Tutorial Section
-- Videos
-- Career Links
+- Blogs []
+- Fix About Me [x]
+- Tutorial Section []
 - Vague Links [x]
 - Motivation Section [x]
-- Usage Section (Various Tools)
 - Get site SSL [x]
-- Timeline
+- Timeline []
 - Quotes [x]
 - Anime Section [x]
 - Books []
