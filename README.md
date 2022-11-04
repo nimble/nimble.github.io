@@ -25,7 +25,6 @@ root/
 ```
 ___
 ## TODO:
-- Blogs []
 - Fix About Me [x]
 - Tutorial Section []
 - Vague Links [x]
