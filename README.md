@@ -25,12 +25,6 @@ root/
 ```
 ___
 ## TODO:
-- Fix About Me [x]
 - Tutorial Section []
-- Vague Links [x]
-- Motivation Section [x]
-- Get site SSL [x]
 - Timeline []
-- Quotes [x]
-- Anime Section [x]
 - Books []
