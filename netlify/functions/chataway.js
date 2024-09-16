@@ -1,5 +1,3 @@
-// netlify/functions/chatgpt.js
-
 // If using Node.js 18+, you can use the built-in fetch
 // Otherwise, ensure node-fetch is installed and uncomment the line below
 // const fetch = require('node-fetch');
