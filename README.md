@@ -13,3 +13,4 @@ Jona's Website - [Jiglo.ca](https://Jiglo.ca)
 - Twitter Influencers
 - Time Management / Allocation
 - Full day of Eating [] (Macros Tracked / Calories)
+- Powerlifting
