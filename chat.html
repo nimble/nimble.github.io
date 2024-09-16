@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Chat with GPT-3.5</title>
+  <title>Chat Away</title>
   <!-- Include CSS Libraries -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+  <!-- Updated to use Atom One Dark theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
   <!-- Custom Styles -->
   <style>
     /* Basic reset */
@@ -16,24 +17,24 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      color: #333;
+      background-color: #282c34; /* Dark background to match the theme */
+      color: #abb2bf;
     }
 
     h1 {
       text-align: center;
       padding: 20px 0;
-      background-color: #4a90e2;
-      color: #fff;
+      background-color: #21252b;
+      color: #e06c75;
       margin-bottom: 10px;
     }
 
     #chat-container {
       width: 90%;
       max-width: 800px;
-      margin: 0 auto;
-      background-color: #fff;
-      border: 1px solid #ddd;
+      margin: 20px auto;
+      background-color: #21252b;
+      border: 1px solid #181a1f;
       border-radius: 5px;
       overflow: hidden;
       display: flex;
@@ -49,7 +50,7 @@
 
     #input-container {
       display: flex;
-      border-top: 1px solid #ddd;
+      border-top: 1px solid #181a1f;
     }
 
     #user-input {
@@ -57,19 +58,25 @@
       padding: 15px;
       border: none;
       font-size: 16px;
+      background-color: #2c313c;
+      color: #abb2bf;
+    }
+
+    #user-input::placeholder {
+      color: #5c6370;
     }
 
     #send-button {
       padding: 15px 20px;
-      background-color: #4a90e2;
-      color: #fff;
+      background-color: #61afef;
+      color: #282c34;
       border: none;
       cursor: pointer;
       font-size: 16px;
     }
 
     #send-button:hover {
-      background-color: #357ab8;
+      background-color: #528bbd;
     }
 
     .message {
@@ -77,7 +84,8 @@
     }
 
     .message.user p {
-      background-color: #d1e7dd;
+      background-color: #98c379;
+      color: #282c34;
       padding: 10px;
       border-radius: 10px;
       display: inline-block;
@@ -85,7 +93,8 @@
     }
 
     .message.ai p {
-      background-color: #f8d7da;
+      background-color: #e06c75;
+      color: #282c34;
       padding: 10px;
       border-radius: 10px;
       display: inline-block;
@@ -94,7 +103,7 @@
 
     /* Style for code blocks */
     pre {
-      background-color: #f5f5f5;
+      background-color: #282c34;
       padding: 15px;
       overflow-x: auto;
       border-radius: 5px;
@@ -113,19 +122,33 @@
       padding: 5px 10px;
       font-size: 12px;
       cursor: pointer;
-      background-color: #4a90e2;
-      color: #fff;
+      background-color: #61afef;
+      color: #282c34;
       border: none;
       border-radius: 5px;
     }
 
     .copy-button:hover {
-      background-color: #357ab8;
+      background-color: #528bbd;
+    }
+
+    /* Scrollbar styling */
+    #messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #messages::-webkit-scrollbar-thumb {
+      background-color: #4b5261;
+      border-radius: 4px;
+    }
+
+    #messages::-webkit-scrollbar-track {
+      background-color: #21252b;
     }
   </style>
 </head>
 <body>
-  <h1>Chat with GPT-3.5</h1>
+  <h1>Chat Away</h1>
   <div id="chat-container">
     <div id="messages"></div>
     <div id="input-container">
@@ -137,7 +160,7 @@
   <!-- Include JS Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <!-- Initialize Highlight.js -->
+  <!-- Initialize Highlight.js with the Atom One Dark theme -->
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
       hljs.highlightAll();
@@ -187,7 +210,10 @@
         });
 
         const pre = codeBlock.parentNode;
-        pre.parentNode.insertBefore(button, pre);
+        if (!pre.classList.contains('copy-button-added')) {
+          pre.classList.add('copy-button-added');
+          pre.parentNode.insertBefore(button, pre);
+        }
       });
     }
 
