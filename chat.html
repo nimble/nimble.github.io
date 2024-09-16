@@ -2,49 +2,166 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Chat with GPT-4</title>
+  <title>Chat with GPT-3.5</title>
+  <!-- Include CSS Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+  <!-- Custom Styles -->
   <style>
-    /* Add basic styles for better appearance */
+    /* Basic reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #4a90e2;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
     #chat-container {
-      width: 500px;
+      width: 90%;
+      max-width: 800px;
       margin: 0 auto;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
+
     #messages {
-      border: 1px solid #ccc;
-      height: 300px;
-      overflow-y: scroll;
-      padding: 10px;
-      margin-bottom: 10px;
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      max-height: 500px;
     }
+
+    #input-container {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
     #user-input {
-      width: 400px;
+      flex: 1;
+      padding: 15px;
+      border: none;
+      font-size: 16px;
     }
+
     #send-button {
-      width: 80px;
+      padding: 15px 20px;
+      background-color: #4a90e2;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
     }
+
+    #send-button:hover {
+      background-color: #357ab8;
+    }
+
     .message {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-    .user {
-      color: blue;
+
+    .message.user p {
+      background-color: #d1e7dd;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 80%;
     }
-    .ai {
-      color: green;
+
+    .message.ai p {
+      background-color: #f8d7da;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 80%;
+    }
+
+    /* Style for code blocks */
+    pre {
+      background-color: #f5f5f5;
+      padding: 15px;
+      overflow-x: auto;
+      border-radius: 5px;
+      position: relative;
+      margin-top: 10px;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      background-color: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .copy-button:hover {
+      background-color: #357ab8;
     }
   </style>
 </head>
 <body>
-  <h1>Chat with GPT-4</h1>
+  <h1>Chat with GPT-3.5</h1>
   <div id="chat-container">
     <div id="messages"></div>
-    <input type="text" id="user-input" placeholder="Type your message here" />
-    <button id="send-button">Send</button>
+    <div id="input-container">
+      <input type="text" id="user-input" placeholder="Type your message here" />
+      <button id="send-button">Send</button>
+    </div>
   </div>
 
+  <!-- Include JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <!-- Initialize Highlight.js -->
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      hljs.highlightAll();
+    });
+  </script>
+
+  <!-- Password Protection -->
+  <script>
+    // Prompt for password before accessing the page
+    const password = prompt('Please enter the password to access this page:');
+    if (password !== 'Jiglo123!') {
+      alert('Incorrect password.');
+      window.location.href = 'https://jiglo.ca'; // Redirect to home page
+    }
+  </script>
+
+  <!-- Your JavaScript Code -->
   <script>
     const messagesDiv = document.getElementById('messages');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
+
+    // Replace with your Netlify Function URL
+    const functionUrl = 'https://fancy-panda-750ea8.netlify.app/.netlify/functions/chatgpt';
 
     sendButton.addEventListener('click', sendMessage);
 
@@ -54,6 +171,47 @@
       }
     });
 
+    function addCopyButtons() {
+      document.querySelectorAll('pre code').forEach((codeBlock) => {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.textContent = 'Copy';
+
+        button.addEventListener('click', () => {
+          navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+              button.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+
+        const pre = codeBlock.parentNode;
+        pre.parentNode.insertBefore(button, pre);
+      });
+    }
+
+    function updateAIMessage(content) {
+      const aiMessageDiv = document.createElement('div');
+      aiMessageDiv.classList.add('message', 'ai');
+
+      // Parse the markdown content
+      const parsedContent = marked.parse(content);
+
+      // Set the innerHTML of the message div
+      const messageContent = document.createElement('p');
+      messageContent.innerHTML = parsedContent;
+      aiMessageDiv.appendChild(messageContent);
+
+      messagesDiv.appendChild(aiMessageDiv);
+
+      // Highlight code and add copy buttons
+      hljs.highlightAll();
+      addCopyButtons();
+
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
     async function sendMessage() {
       const message = userInput.value.trim();
       if (!message) return;
@@ -61,37 +219,32 @@
       // Display user's message
       const userMessageDiv = document.createElement('div');
       userMessageDiv.classList.add('message', 'user');
-      userMessageDiv.textContent = 'You: ' + message;
+
+      const messageContent = document.createElement('p');
+      messageContent.textContent = message;
+      userMessageDiv.appendChild(messageContent);
+
       messagesDiv.appendChild(userMessageDiv);
-
-      // Scroll to the bottom
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-      // Clear input
       userInput.value = '';
 
-      // Call the serverless function
       try {
-        const response = await fetch('https://master--fancy-panda-750ea8.netlify.app/.netlify/functions/chatgpt', {
+        const response = await fetch(functionUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message })
+          body: JSON.stringify({ message }),
         });
 
         if (!response.ok) {
-          throw new Error(`Server error: ${response.statusText}`);
+          const errorDetails = await response.text();
+          throw new Error(`Server error: ${response.statusText} - ${errorDetails}`);
         }
 
         const data = await response.json();
 
         // Display AI's response
-        const aiMessageDiv = document.createElement('div');
-        aiMessageDiv.classList.add('message', 'ai');
-        aiMessageDiv.textContent = 'AI: ' + data.choices[0].message.content;
-        messagesDiv.appendChild(aiMessageDiv);
-
-        // Scroll to the bottom
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        const aiContent = data.choices[0].message.content;
+        updateAIMessage(aiContent);
       } catch (error) {
         console.error('Error:', error);
         alert('An error occurred while communicating with the AI.');
