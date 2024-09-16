@@ -5,15 +5,25 @@
 // const fetch = require('node-fetch');
 
 exports.handler = async function(event, context) {
+    // Define the allowed origins
+    const allowedOrigins = ['https://jiglo.ca', 'https://www.jiglo.ca'];
+  
+    const origin = event.headers.origin;
+    const headers = {
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    };
+  
+    // Check if the request origin is in the allowed origins
+    if (allowedOrigins.includes(origin)) {
+      headers['Access-Control-Allow-Origin'] = origin;
+    }
+  
     // Handle CORS preflight OPTIONS request
     if (event.httpMethod === 'OPTIONS') {
       return {
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': 'https://jiglo.ca',
-          'Access-Control-Allow-Headers': 'Content-Type',
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        },
+        headers,
         body: '',
       };
     }
@@ -23,6 +33,7 @@ exports.handler = async function(event, context) {
       return {
         statusCode: 405,
         headers: {
+          ...headers,
           'Allow': 'POST, OPTIONS',
         },
         body: JSON.stringify({ error: 'Method Not Allowed' }),
@@ -41,6 +52,7 @@ exports.handler = async function(event, context) {
       if (!message) {
         return {
           statusCode: 400,
+          headers,
           body: JSON.stringify({ error: 'Message is required' }),
         };
       }
@@ -53,7 +65,7 @@ exports.handler = async function(event, context) {
           'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo', // Use 'gpt-4' or the desired model
+          model: 'gpt-3.5-turbo', // Use 'gpt-4' if you have access
           messages: [{ role: 'user', content: message }],
         }),
       });
@@ -67,20 +79,14 @@ exports.handler = async function(event, context) {
   
       return {
         statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': 'https://jiglo.ca',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        },
+        headers,
         body: JSON.stringify(data),
       };
     } catch (error) {
       console.error('Error:', error);
       return {
         statusCode: 500,
-        headers: {
-          'Access-Control-Allow-Origin': 'https://jiglo.ca',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        },
+        headers,
         body: JSON.stringify({ error: error.message }),
       };
     }
