@@ -1,0 +1,23 @@
+{
+  "name": "nimble.github.io",
+  "version": "1.0.0",
+  "description": "Jona's Website - [Jiglo.ca](https://Jiglo.ca) ___ ## Project Structure ``` root/ ├─ css/ │  ├─ style.css ├─ images/ │  ├─ discord_icon.png │  ├─ github_icon.png │  ├─ twitter_icon.png │  ├─ email_icon.png │  ├─ favicon.ico ├─ pages/ │  ├─ anime.html │  ├─ motivation.html │  ├─ quotes.html │  ├─ usefullinks.html ├─ .gitignore ├─ CNAME ├─ index.html ├─ LEARNING.md ├─ README.md ``` ___ ## TODO: - Tutorial Section [] - Timeline [] - Books [] - Supplements [] - Twitter Influencers [] - Time Management / Allocation [] - Full day of Eating [] (Macros Tracked / Calories)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://nimble@github.com/nimble/nimble.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nimble/nimble.github.io/issues"
+  },
+  "homepage": "https://github.com/nimble/nimble.github.io#readme",
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}
