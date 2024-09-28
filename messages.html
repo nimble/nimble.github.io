@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shared Messages</title>
+  <!-- Add any CSS styles here -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f0f2f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    #auth-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #auth-container input {
+      padding: 10px;
+      margin: 5px;
+      width: 200px;
+    }
+    #auth-container button {
+      padding: 10px 20px;
+      margin: 5px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #submit-button, #clear-button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #messages {
+      margin-top: 30px;
+    }
+    .message {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .message p {
+      margin-bottom: 5px;
+    }
+    .message small {
+      color: #777;
+    }
+    #clear-button {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shared Messages</h1>
+
+  <!-- Authentication Container -->
+  <div id="auth-container">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <br>
+    <button id="login-button">Login</button>
+    <button id="signup-button">Sign Up</button>
+    <button id="logout-button" style="display: none;">Logout</button>
+  </div>
+
+  <!-- Content Submission -->
+  <textarea id="message-input" placeholder="Paste your content here"></textarea>
+  <br>
+  <button id="submit-button">Submit</button>
+  <button id="clear-button" style="display: none;">Clear All Messages</button>
+
+  <!-- Messages Display -->
+  <div id="messages"></div>
+
+  <!-- Include Firebase SDK -->
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <!-- Firebase Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <!-- Firebase Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <!-- Your JavaScript Code -->
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVtRCpjLzOo+0P\nR938z85NGQzaYuzYk9wfsgGgjjZeBrOFTjqae6JiTCkTrnMfb/+r3hCb43gSqUUe\nslg16Bxyww8nTkyaPmFaK03NLFPgse5AGYyphQh4WF7TRfaeF2w3Fc/fZA9XR/26\n85MzIHlIQsCKQZZJNj6NXHO2lAQ191i6z7kOtf3SkcVS6BwfooLTrFMipj72bUQk\nkuVGqdtFsGlgREO42689cxO3LH5aLv9rDM/LRKD+DV3mHsZIl0VimmR77qXxKIeP\nLelFw73MPgi23I0l34y37KMnv16MWKGtu5SGOE8DGaWW6R8rsdCVXx1gSx1cFwJa\nd6eMbrizAgMBAAECggEAElzLpuhGzlfH/3xSq6w3gzhj3bONloEIWnDkhzN6Uq0i\nvuKaCJHKmKD71tiqcTw1EXki82QCudM+UaYRcMdAGgl35dvSRIcLPNqb5+MchK5+\naSlZGf/hypUYSHTH65s24EjSHvXwdcW0RwaSUw6UIbtiT3L9AozfPkqNPONJ4u58\nTKNVYemCAbfRiCE0ccXkBLOqXHvb9FEX/pwdeAAAekt/M9x5L9DFwc+EETPmZtIw\nobemSLLMX188N9/4uj+3c4Nqlwzsf5fEfrbdjx2aJShc/ze4AVaO6veA45BqekcO\napQl1AMLofZ1wNKTVzwKEdM6GONPd3KYVoR0hDgD0QKBgQDKDtY8scFI02/0ht9t\nT8mlxRY3y5O6NU9IuijM1tqDfXHJSerl/FK6FRIWAEFCPhewZlVfz0v+8fQG6BD3\nuk+Fz/Y225JYG7c63C5w9BfNSoF/7csvHxR1OQHiTnZQrOq9Ml0ZwdEmtk2Ntsnz\nNR9P3ZPrpmjbDKiyJrI9B2tXEQKBgQC9rHKxnnPDHQqv2mvNsCINz7cM3Gxsg22v\nP2r3/0fJuGrohvgvLunxz6k9QfqMvRbdQ8vFg3XmXneWXSh9vNeLwDfdOvndPTTq\nV1TfzjwqQKhKcV74f1C2aQJK6wvPw/XbIW6MmKZJ+keGOzmNMoL713zajtR5WWGM\nsQftSux7gwKBgFDCUVp86XYEHFEtvwtfwobhGRo/4dGhEQlObpRAo6G+d8YuJxa5\nHQ+G8G2euHaTfsBghmr+3a8OYayJAI8jBjnDfvM6G2nf2gJKkr1Osly5FL1e+8Df\nuTuJB3m+RofENSZdhNyQnNnOL30eu+TbLKKtOzwKjQpQKvTZho/h8UMhAoGAHWMc\nmhx8vxw+zaQ/06yYeh9Wsy1rtxxd4CspPadVzhE+ryxKQ7U3FfogtJcGZMvfQQUC\nC2Yk3D6CtM9WOLULiGGNxj8e+4JCMpS5V7uyYrGF4ZLTLhk7vidi7YyhVd18uCjj\n4fC8wvV+I3QFpLTQyohGle5PSUXp8Ux0d/WF0lUCgYEAj3yZJTZjn3Mzhu2B3qxx\ndNZb4EQXQeUPMxTs4fvn7Ri7wtP0294NCTDwEWopnUR8hAj1zow+OaAIMD7RzTKZ\n+cPLLQ1FTyVjVh2FqlWY4RxnTT4m7h5RWsQ2PmhvInMi5iWoLNkuqkU6/+O62Elu\nJ9gAV1TBsKDT93wAXFHmwF4=\n-----END PRIVATE KEY-----\n",
+      authDomain: "https://accounts.google.com/o/oauth2/auth",
+      projectId: "jiglo-47ad7",
+      // You can include other config parameters if needed
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('login-button');
+    const signupButton = document.getElementById('signup-button');
+    const logoutButton = document.getElementById('logout-button');
+    const authContainer = document.getElementById('auth-container');
+
+    const messageInput = document.getElementById('message-input');
+    const submitButton = document.getElementById('submit-button');
+    const clearButton = document.getElementById('clear-button');
+    const messagesDiv = document.getElementById('messages');
+
+    // Authentication state observer
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        authContainer.style.display = 'none';
+        logoutButton.style.display = 'inline-block';
+        clearButton.style.display = 'inline-block'; // Show clear button to authenticated users
+      } else {
+        // No user is signed in
+        authContainer.style.display = 'block';
+        logoutButton.style.display = 'none';
+        clearButton.style.display = 'none'; // Hide clear button
+      }
+    });
+
+    // Login event
+    loginButton.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      auth.signInWithEmailAndPassword(email, password)
+        .catch((error) => {
+          console.error('Error signing in:', error);
+          alert('Login failed: ' + error.message);
+        });
+    });
+
+    // Signup event
+    signupButton.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .catch((error) => {
+          console.error('Error signing up:', error);
+          alert('Signup failed: ' + error.message);
+        });
+    });
+
+    // Logout event
+    logoutButton.addEventListener('click', () => {
+      auth.signOut();
+    });
+
+    // Function to load messages
+    function loadMessages() {
+      messagesDiv.innerHTML = '';
+      db.collection('messages').orderBy('timestamp').onSnapshot((snapshot) => {
+        messagesDiv.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const messageData = doc.data();
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('message');
+          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
+          messageDiv.innerHTML = `<p>${messageData.content}</p><small>${timestamp}</small>`;
+          messagesDiv.appendChild(messageDiv);
+        });
+      });
+    }
+
+    // Load messages on page load
+    loadMessages();
+
+    // Submit button event listener
+    submitButton.addEventListener('click', () => {
+      const content = messageInput.value.trim();
+      if (!content) return;
+
+      // Save message to Firestore
+      db.collection('messages').add({
+        content: content,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      }).then(() => {
+        messageInput.value = '';
+        // Message will appear automatically due to real-time listener
+      }).catch((error) => {
+        console.error('Error adding message: ', error);
+      });
+    });
+
+    // Clear button event listener
+    clearButton.addEventListener('click', () => {
+      if (auth.currentUser) {
+        if (confirm('Are you sure you want to clear all messages?')) {
+          // Delete all messages
+          db.collection('messages').get().then((querySnapshot) => {
+            const batch = db.batch();
+            querySnapshot.forEach((doc) => {
+              batch.delete(doc.ref);
+            });
+            return batch.commit();
+          }).then(() => {
+            // Messages will be removed automatically due to real-time listener
+          }).catch((error) => {
+            console.error('Error deleting messages: ', error);
+          });
+        }
+      } else {
+        alert('You must be logged in to clear messages.');
+      }
+    });
+  </script>
+</body>
+</html>
