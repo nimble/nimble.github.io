@@ -1,53 +1,53 @@
 @font-face {
-font-family: 'KGSecondChancesSketch';
-src: local('KGSecondChancesSketch'), url(/fonts/KGSecondChancesSketch.ttf) format('truetype');
+  font-family: 'KGSecondChancesSketch';
+  src: local('KGSecondChancesSketch'), url(/fonts/KGSecondChancesSketch.ttf) format('truetype');
 }
 
 html, body {
-font-family: 'Alegreya Sans';
-font-style: normal;
-font-weight: 400;
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 400;
 }
 
 h1, h2, h2, h4, h5 {
-font-family: 'KGSecondChancesSketch';
-font-weight: lighter;
+  font-family: 'KGSecondChancesSketch';
+  font-weight: lighter;
 }
 
 .container {
-margin: 0 auto;
-max-width: 50em;
+  margin: 0 auto;
+  max-width: 50em;
 }
 
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* Link / Links Visited */
-:link { color: #6860ce; }
-:visited { color: #48456d; }
+a:link { color: #0000EE; }      /* Default link color (blue) */
+a:visited { color: #551A8B; }   /* Default visited link color (purple) */
 
 /* Quotes CSS */
 blockquote {
-background: #f9f9f9;
-margin: 1.5em 10px;
-padding: 0.1em 10px;
+  background: #f9f9f9;
+  margin: 1.5em 10px;
+  padding: 0.1em 10px;
 }
 blockquote:before {
-    color: rgb(0, 0, 0);
-    content: open-quote;
-    font-size: 2em;
-    line-height: 0.0em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-  }
+  color: rgb(0, 0, 0);
+  content: open-quote;
+  font-size: 2em;
+  line-height: 0.0em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
 blockquote::after {
-    color: rgb(0, 0, 0);
-    content: close-quote;
-    font-size: 2em;
-    line-height: 0.0em;
-    margin-left: 0.25em;
-    vertical-align: -0.4em;
-  }
+  color: rgb(0, 0, 0);
+  content: close-quote;
+  font-size: 2em;
+  line-height: 0.0em;
+  margin-left: 0.25em;
+  vertical-align: -0.4em;
+}
 blockquote p {
-    display: inline;
-  }
+  display: inline;
+}
