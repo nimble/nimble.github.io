@@ -23,8 +23,8 @@ a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* Link / Links Visited */
-a:link { color: #0000EE; }      /* Default link color (blue) */
-a:visited { color: #551A8B; }   /* Default visited link color (purple) */
+:link { color: #0000EE; }      /* Default link color (blue) */
+:visited { color: #551A8B; }   /* Default visited link color (purple) */
 
 /* Quotes CSS */
 blockquote {
