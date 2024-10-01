@@ -1,79 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Shared Messages</title>
-    <!-- Add any CSS styles here -->
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f0f2f5;
-      }
-      h1 {
-        text-align: center;
-        color: #333;
-      }
-      textarea {
-        width: 100%;
-        height: 100px;
-        padding: 10px;
-        font-size: 16px;
-      }
-      #submit-button,
-      #clear-button {
-        padding: 10px 20px;
-        margin-top: 10px;
-        font-size: 16px;
-      }
-      #clear-button {
-        margin-left: 10px;
-      }
-      #messages {
-        margin-top: 30px;
-      }
-      .message {
-        border-bottom: 1px solid #ccc;
-        padding: 10px 0;
-      }
-      .message p {
-        margin-bottom: 5px;
-        white-space: pre-wrap; /* Preserves whitespace and line breaks */
-      }
-      .message small {
-        color: #777;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Shared Messages</h1>
+<head>
+  <meta charset="UTF-8">
+  <title>Shared Messages</title>
+  <!-- Add any CSS styles here -->
+  <style>
+    /* Existing styles... */
+    /* Include styles for images if necessary */
+    .message img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Shared Messages</h1>
 
-    <!-- Content Submission -->
-    <textarea
-      id="message-input"
-      placeholder="Paste your content here"
-    ></textarea>
-    <br />
-    <button id="submit-button">Submit</button>
-    <button id="clear-button">Clear All Messages</button>
+  <!-- Content Submission -->
+  <textarea id="message-input" placeholder="Paste your content here"></textarea>
+  <br>
+  <button id="submit-button">Submit</button>
+  <button id="clear-button">Clear All Messages</button>
 
-    <!-- Messages Display -->
-    <div id="messages"></div>
+  <!-- Messages Display -->
+  <div id="messages"></div>
 
-    <!-- Include Firebase SDK -->
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <!-- Firebase Firestore -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-    <!-- Include DOMPurify for sanitizing HTML content -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
-    <!-- Include Marked.js for parsing Markdown (optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Include Firebase SDK -->
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <!-- Firebase Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <!-- Firebase Storage -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <!-- Include DOMPurify for sanitizing HTML content -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+  <!-- Include Marked.js for parsing Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    <!-- Your JavaScript Code -->
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
+  <!-- Your JavaScript Code -->
+  <script>
+    const firebaseConfig = {
         apiKey: "AIzaSyBWQInIKD-QiQ-GurDvz8VIFdzvA5bKks0",
         authDomain: "jiglo-47ad7.firebaseapp.com",
         projectId: "jiglo-47ad7",
@@ -83,97 +49,157 @@
         measurementId: "G-VSLLNMXXNR",
       };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-      const messageInput = document.getElementById("message-input");
-      const submitButton = document.getElementById("submit-button");
-      const clearButton = document.getElementById("clear-button");
-      const messagesDiv = document.getElementById("messages");
+    const messageInput = document.getElementById('message-input');
+    const submitButton = document.getElementById('submit-button');
+    const clearButton = document.getElementById('clear-button');
+    const messagesDiv = document.getElementById('messages');
 
-      // Function to load messages
-      function loadMessages() {
-        messagesDiv.innerHTML = "";
-        db.collection("messages")
-          .orderBy("timestamp")
-          .onSnapshot((snapshot) => {
-            messagesDiv.innerHTML = "";
-            snapshot.forEach((doc) => {
-              const messageData = doc.data();
-              const messageDiv = document.createElement("div");
-              messageDiv.classList.add("message");
-              const timestamp = messageData.timestamp
-                ? messageData.timestamp.toDate().toLocaleString()
-                : "Unknown time";
+    // Function to load messages
+    function loadMessages() {
+      messagesDiv.innerHTML = '';
+      db.collection('messages').orderBy('timestamp').onSnapshot((snapshot) => {
+        messagesDiv.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const messageData = doc.data();
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('message');
+          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
 
-              // Sanitize and parse content (Markdown optional)
-              // For plain text with formatting preserved
-              // const sanitizedContent = DOMPurify.sanitize(messageData.content);
+          // Sanitize and parse content
+          const parsedMarkdown = marked.parse(messageData.content);
+          const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
 
-              // For Markdown parsing (uncomment the following lines)
-              const parsedMarkdown = marked.parse(messageData.content);
-              const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
+          // Create message elements
+          const messageParagraph = document.createElement('p');
+          messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
 
-              // Create message elements
-              const messageParagraph = document.createElement("p");
-              messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
+          const timestampSmall = document.createElement('small');
+          timestampSmall.textContent = timestamp;
 
-              const timestampSmall = document.createElement("small");
-              timestampSmall.textContent = timestamp;
+          // Append elements
+          messageDiv.appendChild(messageParagraph);
+          messageDiv.appendChild(timestampSmall);
+          messagesDiv.appendChild(messageDiv);
+        });
+      });
+    }
 
-              // Append elements
-              messageDiv.appendChild(messageParagraph);
-              messageDiv.appendChild(timestampSmall);
-              messagesDiv.appendChild(messageDiv);
-            });
+    // Load messages on page load
+    loadMessages();
+
+    // Submit button event listener
+    submitButton.addEventListener('click', () => {
+      const content = messageInput.value.trim();
+      if (!content) return;
+
+      // Save message to Firestore
+      db.collection('messages').add({
+        content: content,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      }).then(() => {
+        messageInput.value = '';
+        // Message will appear automatically due to real-time listener
+      }).catch((error) => {
+        console.error('Error adding message: ', error);
+      });
+    });
+
+    // Clear button event listener
+    clearButton.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all messages?')) {
+        // Delete all messages
+        db.collection('messages').get().then((querySnapshot) => {
+          const batch = db.batch();
+          querySnapshot.forEach((doc) => {
+            batch.delete(doc.ref);
           });
+          return batch.commit();
+        }).then(() => {
+          // Messages will be removed automatically due to real-time listener
+        }).catch((error) => {
+          console.error('Error deleting messages: ', error);
+        });
       }
+    });
 
-      // Load messages on page load
-      loadMessages();
-
-      // Submit button event listener
-      submitButton.addEventListener("click", () => {
-        const content = messageInput.value.trim();
-        if (!content) return;
-
-        // Save message to Firestore
-        db.collection("messages")
-          .add({
-            content: content,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          })
-          .then(() => {
-            messageInput.value = "";
-            // Message will appear automatically due to real-time listener
-          })
-          .catch((error) => {
-            console.error("Error adding message: ", error);
-          });
-      });
-
-      // Clear button event listener
-      clearButton.addEventListener("click", () => {
-        if (confirm("Are you sure you want to clear all messages?")) {
-          // Delete all messages
-          db.collection("messages")
-            .get()
-            .then((querySnapshot) => {
-              const batch = db.batch();
-              querySnapshot.forEach((doc) => {
-                batch.delete(doc.ref);
-              });
-              return batch.commit();
-            })
-            .then(() => {
-              // Messages will be removed automatically due to real-time listener
-            })
-            .catch((error) => {
-              console.error("Error deleting messages: ", error);
-            });
+    // Handle image pasting
+    messageInput.addEventListener('paste', function(event) {
+      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+      for (let index in items) {
+        const item = items[index];
+        if (item.kind === 'file' && item.type.startsWith('image/')) {
+          event.preventDefault(); // Prevent the default paste action
+          const blob = item.getAsFile();
+          uploadImage(blob);
         }
-      });
-    </script>
-  </body>
+      }
+    });
+
+    function uploadImage(imageBlob) {
+      // Create a unique filename using timestamp
+      const filename = `images/${new Date().getTime()}-${imageBlob.name}`;
+      
+      // Create a storage ref
+      const storageRef = firebase.storage().ref();
+      const imageRef = storageRef.child(filename);
+      
+      // Upload the file
+      const uploadTask = imageRef.put(imageBlob);
+
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          // You can add progress feedback here if you want
+        }, 
+        (error) => {
+          console.error('Error uploading image:', error);
+        }, 
+        () => {
+          // Upload completed successfully, get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            // Insert the image URL into the textarea at the cursor position
+            insertImageUrlAtCursor(downloadURL);
+          });
+        }
+      );
+    }
+
+    function insertImageUrlAtCursor(imageUrl) {
+      const markdownImage = `![Image](${imageUrl})`;
+
+      // Insert at cursor position
+      const textarea = messageInput;
+      const startPos = textarea.selectionStart;
+      const endPos = textarea.selectionEnd;
+      const beforeValue = textarea.value.substring(0, startPos);
+      const afterValue = textarea.value.substring(endPos, textarea.value.length);
+
+      textarea.value = beforeValue + markdownImage + afterValue;
+
+      // Move the cursor
+      textarea.selectionStart = textarea.selectionEnd = startPos + markdownImage.length;
+
+      // Trigger input event to adjust textarea height if auto-resize is implemented
+      textarea.dispatchEvent(new Event('input'));
+    }
+
+    // Auto-resize textarea (optional)
+    messageInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    // Submit on Enter key (optional)
+    messageInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitButton.click();
+      }
+    });
+  </script>
+</body>
 </html>
