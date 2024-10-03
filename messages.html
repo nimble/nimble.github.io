@@ -1,45 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Shared Messages</title>
-  <!-- Add any CSS styles here -->
-  <style>
-    /* Existing styles... */
-    /* Include styles for images if necessary */
-    .message img {
-      max-width: 100%;
-      height: auto;
-    }
-  </style>
-</head>
-<body>
-  <h1>Shared Messages</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shared Messages</title>
+    <!-- Add any CSS styles here -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f0f2f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        min-height: 100px;
+      }
+      #submit-button,
+      #clear-button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        font-size: 16px;
+      }
+      #clear-button {
+        margin-left: 10px;
+      }
+      #messages {
+        margin-top: 30px;
+      }
+      .message {
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+      }
+      .message p {
+        margin-bottom: 5px;
+      }
+      .message small {
+        color: #777;
+      }
+      /* Preserve whitespace and line breaks in code blocks */
+      pre,
+      code {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      /* Style for code blocks */
+      pre code {
+        display: block;
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 6px;
+        overflow-x: auto;
+      }
+      /* Optional: Style for inline code */
+      p code {
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+    </style>
+    <!-- Include Highlight.js CSS (optional) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
+    />
+  </head>
+  <body>
+    <h1>Shared Messages</h1>
 
-  <!-- Content Submission -->
-  <textarea id="message-input" placeholder="Paste your content here"></textarea>
-  <br>
-  <button id="submit-button">Submit</button>
-  <button id="clear-button">Clear All Messages</button>
+    <!-- Content Submission -->
+    <textarea
+      id="message-input"
+      placeholder="Paste your content here"
+    ></textarea>
+    <br />
+    <button id="submit-button">Submit</button>
+    <button id="clear-button">Clear All Messages</button>
 
-  <!-- Messages Display -->
-  <div id="messages"></div>
+    <!-- Messages Display -->
+    <div id="messages"></div>
 
-  <!-- Include Firebase SDK -->
-  <!-- Firebase App (the core Firebase SDK) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <!-- Firebase Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <!-- Firebase Storage -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
-  <!-- Include DOMPurify for sanitizing HTML content -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
-  <!-- Include Marked.js for parsing Markdown -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Include Firebase SDK -->
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <!-- Firebase Storage (if needed) -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script> -->
+    <!-- Include DOMPurify for sanitizing HTML content -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+    <!-- Include Marked.js for parsing Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Include Highlight.js for syntax highlighting (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Initialize Highlight.js -->
+    <script>
+      hljs.highlightAll();
+    </script>
 
-  <!-- Your JavaScript Code -->
-  <script>
-    const firebaseConfig = {
+    <!-- Your JavaScript Code -->
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
         apiKey: "AIzaSyBWQInIKD-QiQ-GurDvz8VIFdzvA5bKks0",
         authDomain: "jiglo-47ad7.firebaseapp.com",
         projectId: "jiglo-47ad7",
@@ -49,157 +115,123 @@
         measurementId: "G-VSLLNMXXNR",
       };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const storage = firebase.storage();
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
 
-    const messageInput = document.getElementById('message-input');
-    const submitButton = document.getElementById('submit-button');
-    const clearButton = document.getElementById('clear-button');
-    const messagesDiv = document.getElementById('messages');
+      const messageInput = document.getElementById("message-input");
+      const submitButton = document.getElementById("submit-button");
+      const clearButton = document.getElementById("clear-button");
+      const messagesDiv = document.getElementById("messages");
 
-    // Function to load messages
-    function loadMessages() {
-      messagesDiv.innerHTML = '';
-      db.collection('messages').orderBy('timestamp').onSnapshot((snapshot) => {
-        messagesDiv.innerHTML = '';
-        snapshot.forEach((doc) => {
-          const messageData = doc.data();
-          const messageDiv = document.createElement('div');
-          messageDiv.classList.add('message');
-          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
+      // Function to load messages
+      function loadMessages() {
+        messagesDiv.innerHTML = "";
+        db.collection("messages")
+          .orderBy("timestamp")
+          .onSnapshot((snapshot) => {
+            messagesDiv.innerHTML = "";
+            snapshot.forEach((doc) => {
+              const messageData = doc.data();
+              const messageDiv = document.createElement("div");
+              messageDiv.classList.add("message");
+              const timestamp = messageData.timestamp
+                ? messageData.timestamp.toDate().toLocaleString()
+                : "Unknown time";
 
-          // Sanitize and parse content
-          const parsedMarkdown = marked.parse(messageData.content);
-          const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
+              // Sanitize and parse content
+              const rawContent = messageData.content;
 
-          // Create message elements
-          const messageParagraph = document.createElement('p');
-          messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
+              // Parse Markdown with code highlighting
+              const renderer = new marked.Renderer();
 
-          const timestampSmall = document.createElement('small');
-          timestampSmall.textContent = timestamp;
+              // Override code rendering to include Highlight.js
+              renderer.code = function (code, language) {
+                const validLanguage = hljs.getLanguage(language)
+                  ? language
+                  : "plaintext";
+                const highlighted = hljs.highlight(validLanguage, code).value;
+                return `<pre><code class="hljs ${validLanguage}">${highlighted}</code></pre>`;
+              };
 
-          // Append elements
-          messageDiv.appendChild(messageParagraph);
-          messageDiv.appendChild(timestampSmall);
-          messagesDiv.appendChild(messageDiv);
-        });
-      });
-    }
+              const parsedMarkdown = marked.parse(rawContent, {
+                renderer: renderer,
+              });
+              const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
 
-    // Load messages on page load
-    loadMessages();
+              // Create message elements
+              const messageParagraph = document.createElement("div");
+              messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
 
-    // Submit button event listener
-    submitButton.addEventListener('click', () => {
-      const content = messageInput.value.trim();
-      if (!content) return;
+              const timestampSmall = document.createElement("small");
+              timestampSmall.textContent = timestamp;
 
-      // Save message to Firestore
-      db.collection('messages').add({
-        content: content,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      }).then(() => {
-        messageInput.value = '';
-        // Message will appear automatically due to real-time listener
-      }).catch((error) => {
-        console.error('Error adding message: ', error);
-      });
-    });
-
-    // Clear button event listener
-    clearButton.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all messages?')) {
-        // Delete all messages
-        db.collection('messages').get().then((querySnapshot) => {
-          const batch = db.batch();
-          querySnapshot.forEach((doc) => {
-            batch.delete(doc.ref);
+              // Append elements
+              messageDiv.appendChild(messageParagraph);
+              messageDiv.appendChild(timestampSmall);
+              messagesDiv.appendChild(messageDiv);
+            });
           });
-          return batch.commit();
-        }).then(() => {
-          // Messages will be removed automatically due to real-time listener
-        }).catch((error) => {
-          console.error('Error deleting messages: ', error);
-        });
       }
-    });
 
-    // Handle image pasting
-    messageInput.addEventListener('paste', function(event) {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-      for (let index in items) {
-        const item = items[index];
-        if (item.kind === 'file' && item.type.startsWith('image/')) {
-          event.preventDefault(); // Prevent the default paste action
-          const blob = item.getAsFile();
-          uploadImage(blob);
-        }
-      }
-    });
+      // Load messages on page load
+      loadMessages();
 
-    function uploadImage(imageBlob) {
-      // Create a unique filename using timestamp
-      const filename = `images/${new Date().getTime()}-${imageBlob.name}`;
-      
-      // Create a storage ref
-      const storageRef = firebase.storage().ref();
-      const imageRef = storageRef.child(filename);
-      
-      // Upload the file
-      const uploadTask = imageRef.put(imageBlob);
+      // Submit button event listener
+      submitButton.addEventListener("click", () => {
+        const content = messageInput.value.trim();
+        if (!content) return;
 
-      uploadTask.on('state_changed', 
-        (snapshot) => {
-          // You can add progress feedback here if you want
-        }, 
-        (error) => {
-          console.error('Error uploading image:', error);
-        }, 
-        () => {
-          // Upload completed successfully, get the download URL
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            // Insert the image URL into the textarea at the cursor position
-            insertImageUrlAtCursor(downloadURL);
+        // Save message to Firestore
+        db.collection("messages")
+          .add({
+            content: content,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            messageInput.value = "";
+            // Message will appear automatically due to real-time listener
+          })
+          .catch((error) => {
+            console.error("Error adding message: ", error);
           });
+      });
+
+      // Clear button event listener
+      clearButton.addEventListener("click", () => {
+        if (confirm("Are you sure you want to clear all messages?")) {
+          // Delete all messages
+          db.collection("messages")
+            .get()
+            .then((querySnapshot) => {
+              const batch = db.batch();
+              querySnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+              });
+              return batch.commit();
+            })
+            .then(() => {
+              // Messages will be removed automatically due to real-time listener
+            })
+            .catch((error) => {
+              console.error("Error deleting messages: ", error);
+            });
         }
-      );
-    }
+      });
 
-    function insertImageUrlAtCursor(imageUrl) {
-      const markdownImage = `![Image](${imageUrl})`;
+      // Auto-resize textarea (optional)
+      messageInput.addEventListener("input", function () {
+        this.style.height = "auto";
+        this.style.height = this.scrollHeight + "px";
+      });
 
-      // Insert at cursor position
-      const textarea = messageInput;
-      const startPos = textarea.selectionStart;
-      const endPos = textarea.selectionEnd;
-      const beforeValue = textarea.value.substring(0, startPos);
-      const afterValue = textarea.value.substring(endPos, textarea.value.length);
-
-      textarea.value = beforeValue + markdownImage + afterValue;
-
-      // Move the cursor
-      textarea.selectionStart = textarea.selectionEnd = startPos + markdownImage.length;
-
-      // Trigger input event to adjust textarea height if auto-resize is implemented
-      textarea.dispatchEvent(new Event('input'));
-    }
-
-    // Auto-resize textarea (optional)
-    messageInput.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = (this.scrollHeight) + 'px';
-    });
-
-    // Submit on Enter key (optional)
-    messageInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        submitButton.click();
-      }
-    });
-  </script>
-</body>
+      // Submit on Enter key (optional)
+      messageInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          submitButton.click();
+        }
+      });
+    </script>
+  </body>
 </html>
