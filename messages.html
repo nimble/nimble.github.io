@@ -1,112 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Shared Messages</title>
-    <!-- Add any CSS styles here -->
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f0f2f5;
-      }
-      h1 {
-        text-align: center;
-        color: #333;
-      }
-      textarea {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        min-height: 100px;
-      }
-      #submit-button,
-      #clear-button {
-        padding: 10px 20px;
-        margin-top: 10px;
-        font-size: 16px;
-      }
-      #clear-button {
-        margin-left: 10px;
-      }
-      #messages {
-        margin-top: 30px;
-      }
-      .message {
-        border-bottom: 1px solid #ccc;
-        padding: 10px 0;
-      }
-      .message p {
-        margin-bottom: 5px;
-      }
-      .message small {
-        color: #777;
-      }
-      /* Preserve whitespace and line breaks in code blocks */
-      pre,
-      code {
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-      /* Style for code blocks */
-      pre code {
-        display: block;
-        background-color: #f6f8fa;
-        padding: 16px;
-        border-radius: 6px;
-        overflow-x: auto;
-      }
-      /* Optional: Style for inline code */
-      p code {
-        background-color: #f6f8fa;
-        padding: 2px 4px;
-        border-radius: 4px;
-      }
-    </style>
-    <!-- Include Highlight.js CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
-    />
-  </head>
-  <body>
-    <h1>Shared Messages</h1>
+<head>
+  <meta charset="UTF-8">
+  <title>Shared Messages</title>
+  <!-- Add any CSS styles here -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f0f2f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      min-height: 100px;
+    }
+    #submit-button, #clear-button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #clear-button {
+      margin-left: 10px;
+    }
+    #messages {
+      margin-top: 30px;
+    }
+    .message {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .message p {
+      margin-bottom: 5px;
+    }
+    .message small {
+      color: #777;
+    }
+    /* Preserve whitespace and line breaks in code blocks */
+    pre, code {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    /* Style for code blocks */
+    pre code {
+      display: block;
+      background-color: #f6f8fa;
+      padding: 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    /* Optional: Style for inline code */
+    p code {
+      background-color: #f6f8fa;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+  <!-- Include Highlight.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+</head>
+<body>
+  <h1>Shared Messages</h1>
 
-    <!-- Content Submission -->
-    <textarea
-      id="message-input"
-      placeholder="Paste your content here"
-    ></textarea>
-    <br />
-    <button id="submit-button">Submit</button>
-    <button id="clear-button">Clear All Messages</button>
+  <!-- Content Submission -->
+  <textarea id="message-input" placeholder="Paste your content here"></textarea>
+  <br>
+  <button id="submit-button">Submit</button>
+  <button id="clear-button">Clear All Messages</button>
 
-    <!-- Messages Display -->
-    <div id="messages"></div>
+  <!-- Messages Display -->
+  <div id="messages"></div>
 
-    <!-- Include Firebase SDK -->
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <!-- Firebase Firestore -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-    <!-- Include DOMPurify for sanitizing HTML content -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
-    <!-- Include Marked.js for parsing Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Include Highlight.js for syntax highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <!-- Include all languages or specific languages as needed -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
-    <!-- Initialize Highlight.js -->
-    <script>
-      // Initialize Highlight.js (not needed here since we're highlighting manually)
-    </script>
+  <!-- Include Firebase SDK -->
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <!-- Firebase Firestore -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <!-- Include DOMPurify for sanitizing HTML content -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+  <!-- Include Marked.js for parsing Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Include Highlight.js for syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <!-- Include specific languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+  <!-- Add more languages as needed -->
 
-    <!-- Your JavaScript Code -->
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
+  <!-- Your JavaScript Code -->
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
         apiKey: "AIzaSyBWQInIKD-QiQ-GurDvz8VIFdzvA5bKks0",
         authDomain: "jiglo-47ad7.firebaseapp.com",
         projectId: "jiglo-47ad7",
@@ -116,127 +105,107 @@
         measurementId: "G-VSLLNMXXNR",
       };
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-      const messageInput = document.getElementById("message-input");
-      const submitButton = document.getElementById("submit-button");
-      const clearButton = document.getElementById("clear-button");
-      const messagesDiv = document.getElementById("messages");
+    const messageInput = document.getElementById('message-input');
+    const submitButton = document.getElementById('submit-button');
+    const clearButton = document.getElementById('clear-button');
+    const messagesDiv = document.getElementById('messages');
 
-      // Function to load messages
-      function loadMessages() {
-        messagesDiv.innerHTML = "";
-        db.collection("messages")
-          .orderBy("timestamp")
-          .onSnapshot((snapshot) => {
-            messagesDiv.innerHTML = "";
-            snapshot.forEach((doc) => {
-              const messageData = doc.data();
-              const messageDiv = document.createElement("div");
-              messageDiv.classList.add("message");
-              const timestamp = messageData.timestamp
-                ? messageData.timestamp.toDate().toLocaleString()
-                : "Unknown time";
-
-              // Sanitize and parse content
-              const rawContent = messageData.content;
-
-              // Create a custom renderer for Marked.js
-              const renderer = new marked.Renderer();
-
-              // Override code rendering to include Highlight.js
-              renderer.code = function (code, language) {
-                const validLanguage = hljs.getLanguage(language)
-                  ? language
-                  : "plaintext";
-                const highlighted = hljs.highlight(code, {
-                  language: validLanguage,
-                  ignoreIllegals: true,
-                }).value;
-                return `<pre><code class="hljs ${validLanguage}">${highlighted}</code></pre>`;
-              };
-
-              // Parse Markdown with the custom renderer
-              const parsedMarkdown = marked.parse(rawContent, {
-                renderer: renderer,
-              });
-              const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
-
-              // Create message elements
-              const messageParagraph = document.createElement("div");
-              messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
-
-              const timestampSmall = document.createElement("small");
-              timestampSmall.textContent = timestamp;
-
-              // Append elements
-              messageDiv.appendChild(messageParagraph);
-              messageDiv.appendChild(timestampSmall);
-              messagesDiv.appendChild(messageDiv);
-            });
-          });
+    // Configure Marked.js with the highlight function
+    marked.setOptions({
+      highlight: function(code, language) {
+        const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+        return hljs.highlight(code, { language: validLanguage, ignoreIllegals: true }).value;
       }
+    });
 
-      // Load messages on page load
-      loadMessages();
+    // Function to load messages
+    function loadMessages() {
+      messagesDiv.innerHTML = '';
+      db.collection('messages').orderBy('timestamp').onSnapshot((snapshot) => {
+        messagesDiv.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const messageData = doc.data();
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('message');
+          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
 
-      // Submit button event listener
-      submitButton.addEventListener("click", () => {
-        const content = messageInput.value.trim();
-        if (!content) return;
+          // Sanitize and parse content
+          const rawContent = messageData.content;
 
-        // Save message to Firestore
-        db.collection("messages")
-          .add({
-            content: content,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          })
-          .then(() => {
-            messageInput.value = "";
-            // Message will appear automatically due to real-time listener
-          })
-          .catch((error) => {
-            console.error("Error adding message: ", error);
+          // Parse Markdown using the configured Marked.js
+          const parsedMarkdown = marked.parse(rawContent);
+          const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
+
+          // Create message elements
+          const messageParagraph = document.createElement('div');
+          messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
+
+          const timestampSmall = document.createElement('small');
+          timestampSmall.textContent = timestamp;
+
+          // Append elements
+          messageDiv.appendChild(messageParagraph);
+          messageDiv.appendChild(timestampSmall);
+          messagesDiv.appendChild(messageDiv);
+        });
+      });
+    }
+
+    // Load messages on page load
+    loadMessages();
+
+    // Submit button event listener
+    submitButton.addEventListener('click', () => {
+      const content = messageInput.value.trim();
+      if (!content) return;
+
+      // Save message to Firestore
+      db.collection('messages').add({
+        content: content,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      }).then(() => {
+        messageInput.value = '';
+        // Message will appear automatically due to real-time listener
+      }).catch((error) => {
+        console.error('Error adding message: ', error);
+      });
+    });
+
+    // Clear button event listener
+    clearButton.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all messages?')) {
+        // Delete all messages
+        db.collection('messages').get().then((querySnapshot) => {
+          const batch = db.batch();
+          querySnapshot.forEach((doc) => {
+            batch.delete(doc.ref);
           });
-      });
+          return batch.commit();
+        }).then(() => {
+          // Messages will be removed automatically due to real-time listener
+        }).catch((error) => {
+          console.error('Error deleting messages: ', error);
+        });
+      }
+    });
 
-      // Clear button event listener
-      clearButton.addEventListener("click", () => {
-        if (confirm("Are you sure you want to clear all messages?")) {
-          // Delete all messages
-          db.collection("messages")
-            .get()
-            .then((querySnapshot) => {
-              const batch = db.batch();
-              querySnapshot.forEach((doc) => {
-                batch.delete(doc.ref);
-              });
-              return batch.commit();
-            })
-            .then(() => {
-              // Messages will be removed automatically due to real-time listener
-            })
-            .catch((error) => {
-              console.error("Error deleting messages: ", error);
-            });
-        }
-      });
+    // Auto-resize textarea (optional)
+    messageInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
 
-      // Auto-resize textarea (optional)
-      messageInput.addEventListener("input", function () {
-        this.style.height = "auto";
-        this.style.height = this.scrollHeight + "px";
-      });
-
-      // Submit on Enter key (optional)
-      messageInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          submitButton.click();
-        }
-      });
-    </script>
-  </body>
+    // Submit on Enter key (optional)
+    messageInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitButton.click();
+      }
+    });
+  </script>
+</body>
 </html>
