@@ -63,7 +63,7 @@
         border-radius: 4px;
       }
     </style>
-    <!-- Include Highlight.js CSS (optional) -->
+    <!-- Include Highlight.js CSS -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
@@ -89,17 +89,18 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-    <!-- Firebase Storage (if needed) -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script> -->
     <!-- Include DOMPurify for sanitizing HTML content -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
     <!-- Include Marked.js for parsing Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Include Highlight.js for syntax highlighting (optional) -->
+    <!-- Include Highlight.js for syntax highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- Include all languages or specific languages as needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
     <!-- Initialize Highlight.js -->
     <script>
-      hljs.highlightAll();
+      // Initialize Highlight.js (not needed here since we're highlighting manually)
     </script>
 
     <!-- Your JavaScript Code -->
@@ -142,7 +143,7 @@
               // Sanitize and parse content
               const rawContent = messageData.content;
 
-              // Parse Markdown with code highlighting
+              // Create a custom renderer for Marked.js
               const renderer = new marked.Renderer();
 
               // Override code rendering to include Highlight.js
@@ -150,10 +151,14 @@
                 const validLanguage = hljs.getLanguage(language)
                   ? language
                   : "plaintext";
-                const highlighted = hljs.highlight(validLanguage, code).value;
+                const highlighted = hljs.highlight(code, {
+                  language: validLanguage,
+                  ignoreIllegals: true,
+                }).value;
                 return `<pre><code class="hljs ${validLanguage}">${highlighted}</code></pre>`;
               };
 
+              // Parse Markdown with the custom renderer
               const parsedMarkdown = marked.parse(rawContent, {
                 renderer: renderer,
               });
