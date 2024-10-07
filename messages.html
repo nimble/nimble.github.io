@@ -200,7 +200,7 @@
       try {
         document.execCommand('copy');
         selection.removeAllRanges();
-        alert('Message copied to clipboard!');
+        <!-- alert('Message copied to clipboard!'); -->
       } catch (err) {
         console.error('Failed to copy:', err);
         alert('Failed to copy message content.');
