@@ -32,10 +32,14 @@
       margin-top: 30px;
     }
     .message {
-      border-bottom: 1px solid #ccc;
-      padding: 10px 0;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+      position: relative; /* For positioning the copy button */
+      background-color: #fff;
+      border-radius: 6px;
     }
-    .message p {
+    .message-content {
       margin-bottom: 5px;
     }
     .message small {
@@ -59,6 +63,22 @@
       background-color: #f6f8fa;
       padding: 2px 4px;
       border-radius: 4px;
+    }
+    /* Style for the copy button */
+    .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 4px;
+      color: #333;
+    }
+    .copy-button:hover {
+      background-color: #d5d5d5;
     }
   </style>
   <!-- Include Highlight.js CSS -->
@@ -131,7 +151,16 @@
           const messageData = doc.data();
           const messageDiv = document.createElement('div');
           messageDiv.classList.add('message');
-          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
+
+          // Create a copy button
+          const copyButton = document.createElement('button');
+          copyButton.textContent = 'Copy';
+          copyButton.classList.add('copy-button');
+
+          // Attach event listener to the copy button
+          copyButton.addEventListener('click', () => {
+            copyMessageContent(messageDiv);
+          });
 
           // Sanitize and parse content
           const rawContent = messageData.content;
@@ -140,19 +169,42 @@
           const parsedMarkdown = marked.parse(rawContent);
           const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
 
-          // Create message elements
-          const messageParagraph = document.createElement('div');
-          messageParagraph.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
+          // Create message content element
+          const messageContentDiv = document.createElement('div');
+          messageContentDiv.classList.add('message-content');
+          messageContentDiv.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
 
+          // Create timestamp element
           const timestampSmall = document.createElement('small');
+          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
           timestampSmall.textContent = timestamp;
 
           // Append elements
-          messageDiv.appendChild(messageParagraph);
+          messageDiv.appendChild(copyButton);
+          messageDiv.appendChild(messageContentDiv);
           messageDiv.appendChild(timestampSmall);
           messagesDiv.appendChild(messageDiv);
         });
       });
+    }
+
+    // Function to copy message content
+    function copyMessageContent(messageDiv) {
+      const messageContentDiv = messageDiv.querySelector('.message-content');
+      const range = document.createRange();
+      range.selectNodeContents(messageContentDiv);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      try {
+        document.execCommand('copy');
+        selection.removeAllRanges();
+        alert('Message copied to clipboard!');
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy message content.');
+      }
     }
 
     // Load messages on page load
