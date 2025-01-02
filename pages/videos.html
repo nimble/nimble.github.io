@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Motivation Videos</title>
+
+  <!-- Embedded Stylesheet (Your Provided Styles + Additional Rules) -->
+  <style>
+    /* --- YOUR PROVIDED STYLES --- */
+
+    @font-face {
+      font-family: 'KGSecondChancesSketch';
+      src: local('KGSecondChancesSketch'), url(/fonts/KGSecondChancesSketch.ttf) format('truetype');
+    }
+
+    html, body {
+      font-family: 'Alegreya Sans';
+      font-style: normal;
+      font-weight: 400;
+      background-color: #f0f2f5; /* Added for a subtle gray background */
+      margin: 0; /* Reset default browser margin */
+      padding: 0;
+    }
+
+    /* Corrected the heading list to h1, h2, h3, h4, h5 (instead of h2 repeated) */
+    h1, h2, h3, h4, h5 {
+      font-family: 'KGSecondChancesSketch';
+      font-weight: lighter;
+    }
+
+    .container {
+      margin: 20px auto; 
+      max-width: 60em;
+    }
+
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Link / Links Visited */
+    :link { color: #0000EE; }      /* Default link color (blue) */
+    :visited { color: #551A8B; }   /* Default visited link color (purple) */
+
+    /* Quotes CSS */
+    blockquote {
+      background: #f9f9f9;
+      margin: 1.5em 10px;
+      padding: 0.1em 10px;
+    }
+    blockquote:before {
+      color: rgb(0, 0, 0);
+      content: open-quote;
+      font-size: 2em;
+      line-height: 0.0em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote::after {
+      color: rgb(0, 0, 0);
+      content: close-quote;
+      font-size: 2em;
+      line-height: 0.0em;
+      margin-left: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote p {
+      display: inline;
+    }
+
+    /* --- ADDITIONAL RULES FOR VIDEO LAYOUT --- */
+
+    .video-title {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    /* Responsive grid for the videos */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .video-grid iframe {
+      width: 100%;
+      height: 315px; /* Adjust as needed */
+      border: none;
+      border-radius: 6px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="video-title">Motivation Videos</h1>
+
+    <div class="video-grid">
+      <!-- 1. e8XWwmGJKQM -->
+      <iframe 
+        src="https://www.youtube.com/embed/e8XWwmGJKQM"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 1">
+      </iframe>
+
+      <!-- 2. aDWTMB1VSxk -->
+      <iframe
+        src="https://www.youtube.com/embed/aDWTMB1VSxk"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 2">
+      </iframe>
+
+      <!-- 3. H5ExSyGTgt4 -->
+      <iframe
+        src="https://www.youtube.com/embed/H5ExSyGTgt4"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 3">
+      </iframe>
+
+      <!-- 4. _v4gLtRfI3o -->
+      <iframe
+        src="https://www.youtube.com/embed/_v4gLtRfI3o"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 4">
+      </iframe>
+
+      <!-- 5. pU80BEm43JM -->
+      <iframe
+        src="https://www.youtube.com/embed/pU80BEm43JM"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 5">
+      </iframe>
+
+      <!-- 6. s7dUZApOpko -->
+      <iframe
+        src="https://www.youtube.com/embed/s7dUZApOpko"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 6">
+      </iframe>
+
+      <!-- 7. ImdtZKSdPuc -->
+      <iframe
+        src="https://www.youtube.com/embed/ImdtZKSdPuc"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 7">
+      </iframe>
+
+      <!-- 8. XUAsKx1uo_A (Shorts) -->
+      <iframe
+        src="https://www.youtube.com/embed/XUAsKx1uo_A"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="YouTube Video 8">
+      </iframe>
+    </div> <!-- .video-grid -->
+
+    <div class="footer">
+      <p>&copy; 2023 My Video Collection</p>
+    </div>
+  </div> <!-- .container -->
+
+</body>
+</html>
