@@ -1,121 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Jona</title>
-    <meta name="description" content="The personal 'about me' page for Jona." />
-    <meta name="keywords" content="Jona, About Me" />
-    <meta name="author" content="Jona" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Alegreya+Sans:400" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-
+<head>
+  <title>Jona</title>
+  <meta name="description" content="The personal 'about me' page for Jona." />
+  <meta name="keywords" content="Jona, About Me" />
+  <meta name="author" content="Jona" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Alegreya+Sans:400" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="css/style.css" />
   <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-1RMRF0MZMG"
-  ></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RMRF0MZMG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
       dataLayer.push(arguments);
     }
     gtag("js", new Date());
-
     gtag("config", "G-1RMRF0MZMG");
   </script>
-
-  <body>
-    <div class="container">
-      <h1 style="text-align: center;">La Crème De La Crème.</h1>
-      <hr />
-      <p style="text-align: center;">
+</head>
+<body>
+  <div class="container">
+    <header class="fade-in">
+      <h1>La Crème De La Crème.</h1>
+    </header>
+    
+    <div class="bio fade-in delay-1">
+      <p>
         Hi, my name is Jona; Currently working as an Analytics & Automation
         Developer at Sun Life.
       </p>
-      <p style="text-align: center;">
+      <p>
         In my spare time I'm working out, reading books or learning new things
         :)
       </p>
-      <p style="text-align: center;">
+      <p>
         Also, I'm trying to continously update this site and add more content to
         it which might be resourceful not only to myself but others too. If you
         notice anything broken or would like to add something feel free to do
         so!
       </p>
-      <hr />
-      <h2>Contact Me:</h2>
-      <ul>
-        <li>
-          <!-- Email -->
-          <img src="images/email_icon.png" alt="Email" width="20" height="20" />
-          <a href="mailto:jona@jiglo.ca">jona@jiglo.ca</a><br />
-        </li>
-        <li>
-          <!-- Discord -->
-          <img
-            src="images/discord_icon.png"
-            alt="Discord"
-            width="20"
-            height="20"
-          />
-          <a href="https://discord.com/users/848608911022882856"> Discord</a
-          ><br />
-        </li>
-        <li>
-          <!-- Twitter -->
-          <img
-            src="images/twitter_icon.png"
-            alt="Twitter"
-            width="20"
-            height="20"
-          />
-          <a href="https://twitter.com/JonaSahota"> Twitter</a>
-        </li>
-      </ul>
-      <h2>Links:</h2>
-      <ul>
-        <li>
-          <img
-            src="images/github_icon.png"
-            alt="Github"
-            width="20"
-            height="20"
-          />
-          <a href="https://github.com/nimble"> Github</a>
-        </li>
-        <li><a href="https://github.com/nimble/resources">Resources</a></li>
-        <li><a href="https://Jiglo.ca/resume/resume.pdf">Resume</a></li>
-      </ul>
-      <h2>Projects:</h2>
-      <ul>
-        <li>
-          <a href="https://github.com/nimble/Solar-System">Solar System</a>
-        </li>
-        <li><a href="https://github.com/nimble/FlappyBird">Flappy Bird</a></li>
-        <li><a href="https://github.com/nimble/Blueprint">Blueprint</a></li>
-        <li><a href="https://github.com/nimble/Resources">Resources</a></li>
-      </ul>
-
-      <h2>Miscellaneous:</h2>
-      <ul>
-        <li><a href="pages/quotes.html">Quotes</a></li>
-        <li><a href="pages/books.html">Books</a></li>
-        <li><a href="pages/usefullinks.html">Useful Links</a></li>
-        <li><a href="pages/motivation.html">Motivation</a></li>
-        <li><a href="pages/anime.html">Anime</a></li>
-        <li><a href="pages/gym.html">Gym</a></li>
-        <li><a href="pages/anxiety.html">Anxiety</a></li>
-        <li><a href="pages/videos.html">Videos</a></li>
-      </ul>
-      <div style="position: static !important;"></div>
-
-      <h2>TODO:</h2>
-      <ul>
-        <li>LeetCode</li>
-        <li>Vim Documentation</li>
-      </ul>
     </div>
-  </body>
+    
+    <hr class="separator" />
+    
+    <div class="card-container">
+      <div class="section-card fade-in delay-2">
+        <h2>Contact Me</h2>
+        <ul>
+          <li>
+            <span class="icon">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <a href="mailto:jona@jiglo.ca">jona@jiglo.ca</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fab fa-discord"></i>
+            </span>
+            <a href="https://discord.com/users/848608911022882856">Discord</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+            <a href="https://twitter.com/JonaSahota">Twitter</a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="section-card fade-in delay-2">
+        <h2>Links</h2>
+        <ul>
+          <li>
+            <span class="icon">
+              <i class="fab fa-github"></i>
+            </span>
+            <a href="https://github.com/nimble">Github</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-folder-open"></i>
+            </span>
+            <a href="https://github.com/nimble/resources">Resources</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-file-alt"></i>
+            </span>
+            <a href="https://Jiglo.ca/resume/resume.pdf">Resume</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="card-container">
+      <div class="section-card fade-in delay-3">
+        <h2>Projects</h2>
+        <ul>
+          <li>
+            <span class="icon">
+              <i class="fas fa-globe"></i>
+            </span>
+            <a href="https://github.com/nimble/Solar-System">Solar System</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-gamepad"></i>
+            </span>
+            <a href="https://github.com/nimble/FlappyBird">Flappy Bird</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-drafting-compass"></i>
+            </span>
+            <a href="https://github.com/nimble/Blueprint">Blueprint</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-folder-open"></i>
+            </span>
+            <a href="https://github.com/nimble/Resources">Resources</a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="section-card fade-in delay-3">
+        <h2>TODO</h2>
+        <ul>
+          <li>
+            <span class="icon">
+              <i class="fas fa-code"></i>
+            </span>
+            LeetCode
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-terminal"></i>
+            </span>
+            Vim Documentation
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="section-card fade-in delay-4" style="margin-top: 1.5rem;">
+      <h2>Miscellaneous</h2>
+      <div class="card-container" style="grid-template-columns: repeat(2, 1fr);">
+        <ul>
+          <li>
+            <span class="icon">
+              <i class="fas fa-quote-left"></i>
+            </span>
+            <a href="pages/quotes.html">Quotes</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-book"></i>
+            </span>
+            <a href="pages/books.html">Books</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-link"></i>
+            </span>
+            <a href="pages/usefullinks.html">Useful Links</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-bolt"></i>
+            </span>
+            <a href="pages/motivation.html">Motivation</a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <span class="icon">
+              <i class="fas fa-tv"></i>
+            </span>
+            <a href="pages/anime.html">Anime</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-dumbbell"></i>
+            </span>
+            <a href="pages/gym.html">Gym</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-heart"></i>
+            </span>
+            <a href="pages/anxiety.html">Anxiety</a>
+          </li>
+          <li>
+            <span class="icon">
+              <i class="fas fa-video"></i>
+            </span>
+            <a href="pages/videos.html">Videos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <footer class="fade-in delay-5">
+      <p>© 2025 Jona</p>
+    </footer>
+  </div>
+</body>
 </html>

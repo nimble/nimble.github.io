@@ -1,53 +1,276 @@
+/* Base font setup */
 @font-face {
   font-family: 'KGSecondChancesSketch';
   src: local('KGSecondChancesSketch'), url(/fonts/KGSecondChancesSketch.ttf) format('truetype');
 }
 
+:root {
+  --primary: #505050;
+  --primary-light: #777777;
+  --secondary: #121212;
+  --background: #f8f9fa;
+  --text: #333;
+  --muted: #6c757d;
+  --border: #dee2e6;
+  --card: #ffffff;
+  --accent: #303030;
+  --light: #f8f9fa;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Basic styling */
 html, body {
-  font-family: 'Alegreya Sans';
-  font-style: normal;
+  font-family: 'Alegreya Sans', sans-serif;
   font-weight: 400;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--background);
 }
 
-h1, h2, h2, h4, h5 {
-  font-family: 'KGSecondChancesSketch';
-  font-weight: lighter;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
+::-webkit-scrollbar-track {
+  background: var(--light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 10px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5 {
+  font-family: 'KGSecondChancesSketch', cursive;
+  font-weight: normal;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-top: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 3px;
+  width: 100%;
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Layout */
 .container {
+  max-width: 800px;
   margin: 0 auto;
-  max-width: 50em;
+  padding: 4rem 2rem;
 }
 
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
 
-/* Link / Links Visited */
-:link { color: #0000EE; }      /* Default link color (blue) */
-:visited { color: #551A8B; }   /* Default visited link color (purple) */
+header::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 4px;
+  background: var(--primary);
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
 
-/* Quotes CSS */
+section {
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+/* Unique elements */
+.bio {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 4rem;
+  padding: 2rem;
+  background: var(--card);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.bio p:last-child {
+  margin-bottom: 0;
+}
+
+.separator {
+  height: 1px;
+  background-image: linear-gradient(to right, transparent, var(--primary), transparent);
+  margin: 3rem 0;
+  border: none;
+}
+
+/* Lists and links */
+ul {
+  list-style-type: none;
+  margin: 1rem 0;
+}
+
+li {
+  margin: 0.8rem 0;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s;
+}
+
+li:hover {
+  transform: translateX(5px);
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.icon {
+  margin-right: 10px;
+  color: var(--primary);
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cards for sections */
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.section-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.section-card h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+}
+
+/* Quotes styling */
 blockquote {
-  background: #f9f9f9;
-  margin: 1.5em 10px;
-  padding: 0.1em 10px;
+  background: var(--light);
+  border-left: 4px solid var(--primary);
+  margin: 1.5em 0;
+  padding: 1em 1.5em;
+  border-radius: 0 10px 10px 0;
+  position: relative;
 }
+
 blockquote:before {
-  color: rgb(0, 0, 0);
-  content: open-quote;
-  font-size: 2em;
-  line-height: 0.0em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
+  content: '"';
+  font-family: Georgia, serif;
+  font-size: 3em;
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  color: var(--primary);
+  opacity: 0.3;
 }
-blockquote::after {
-  color: rgb(0, 0, 0);
-  content: close-quote;
-  font-size: 2em;
-  line-height: 0.0em;
-  margin-left: 0.25em;
-  vertical-align: -0.4em;
-}
+
 blockquote p {
-  display: inline;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 3rem 1.5rem;
+  }
+  
+  h1 {
+    font-size: 2.8rem;
+  }
+  
+  .bio {
+    padding: 1.5rem;
+  }
+}
+
+/* Animation effects */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* Footer styling */
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
