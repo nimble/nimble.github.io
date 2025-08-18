@@ -1,121 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Shared Messages</title>
-  <!-- Add any CSS styles here -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f0f2f5;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      min-height: 100px;
-    }
-    #submit-button, #clear-button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-    #clear-button {
-      margin-left: 10px;
-    }
-    #messages {
-      margin-top: 30px;
-    }
-    .message {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 20px;
-      position: relative; /* For positioning the copy button */
-      background-color: #fff;
-      border-radius: 6px;
-    }
-    .message-content {
-      margin-bottom: 5px;
-    }
-    .message small {
-      color: #777;
-    }
-    /* Preserve whitespace and line breaks in code blocks */
-    pre, code {
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    /* Style for code blocks */
-    pre code {
-      display: block;
-      background-color: #f6f8fa;
-      padding: 16px;
-      border-radius: 6px;
-      overflow-x: auto;
-    }
-    /* Optional: Style for inline code */
-    p code {
-      background-color: #f6f8fa;
-      padding: 2px 4px;
-      border-radius: 4px;
-    }
-    /* Style for the copy button */
-    .copy-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px 10px;
-      font-size: 12px;
-      cursor: pointer;
-      background-color: #e0e0e0;
-      border: none;
-      border-radius: 4px;
-      color: #333;
-    }
-    .copy-button:hover {
-      background-color: #d5d5d5;
-    }
-  </style>
-  <!-- Include Highlight.js CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
-</head>
-<body>
-  <h1>Shared Messages</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Workspace</title>
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --ring: #e5e7eb;
+        --accent: #111827;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: var(--bg);
+        color: var(--text);
+      }
+      .container {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 32px 16px 60px;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .brand {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        color: var(--text);
+      }
+      .ghost {
+        background: transparent;
+        border: 1px solid var(--ring);
+        color: var(--text);
+      }
+      .primary,
+      .ghost,
+      .danger {
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 120ms ease;
+      }
+      .primary {
+        background: var(--accent);
+        color: #fff;
+        border: 1px solid var(--accent);
+      }
+      .primary:hover {
+        filter: brightness(0.92);
+      }
+      .ghost:hover {
+        background: #f1f5f9;
+      }
+      .danger {
+        background: #ef4444;
+        color: #fff;
+        border: 1px solid #ef4444;
+      }
+      .danger:hover {
+        filter: brightness(0.95);
+      }
 
-  <!-- Content Submission -->
-  <textarea id="message-input" placeholder="Paste your content here"></textarea>
-  <br>
-  <button id="submit-button">Submit</button>
-  <button id="clear-button">Clear All Messages</button>
+      .section {
+        margin-top: 22px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--ring);
+        border-radius: 14px;
+        padding: 16px;
+      }
 
-  <!-- Messages Display -->
-  <div id="messages"></div>
+      .compose {
+        display: grid;
+        gap: 12px;
+      }
+      textarea {
+        width: 100%;
+        min-height: 110px;
+        resize: vertical;
+        padding: 12px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--ring);
+        font-size: 15px;
+        line-height: 1.5;
+        background: #fff;
+        color: var(--text);
+      }
 
-  <!-- Include Firebase SDK -->
-  <!-- Firebase App (the core Firebase SDK) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <!-- Firebase Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <!-- Include DOMPurify for sanitizing HTML content -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
-  <!-- Include Marked.js for parsing Markdown -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- Include Highlight.js for syntax highlighting -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-  <!-- Include specific languages -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
-  <!-- Add more languages as needed -->
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
-  <!-- Your JavaScript Code -->
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
+      .dropzone {
+        border: 1px dashed var(--ring);
+        border-radius: 12px;
+        padding: 12px;
+        background: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .dz-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .dz-actions {
+        display: flex;
+        gap: 8px;
+      }
+      .hidden {
+        display: none !important;
+      }
+
+      #preview {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+        margin-top: 8px;
+      }
+      .thumb {
+        position: relative;
+        border: 1px solid var(--ring);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .thumb img {
+        width: 100%;
+        height: 92px;
+        object-fit: cover;
+        display: block;
+      }
+      .thumb button {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 6px;
+        font-size: 11px;
+        cursor: pointer;
+        background: rgba(17, 24, 39, 0.86);
+        color: #fff;
+      }
+
+      .board {
+        margin-top: 20px;
+      }
+
+      #messages {
+        display: grid;
+        gap: 14px;
+      }
+      .message {
+        position: relative;
+        border: 1px solid var(--ring);
+        background: #fff;
+        border-radius: 14px;
+        padding: 14px;
+      }
+      .message small {
+        color: var(--muted);
+      }
+      .copy-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 6px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        background: #f3f4f6;
+        border: 1px solid var(--ring);
+        border-radius: 8px;
+        color: var(--text);
+      }
+      .copy-button:hover {
+        background: #e5e7eb;
+      }
+
+      /* Markdown/code styling */
+      pre,
+      code {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      pre code {
+        display: block;
+        background-color: #f6f8fa;
+        padding: 16px;
+        border-radius: 10px;
+        overflow-x: auto;
+      }
+      p code {
+        background-color: #f6f8fa;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+
+      /* Image grid inside messages */
+      .img-grid {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        margin-top: 8px;
+      }
+      .img-grid a {
+        display: block;
+        border: 1px solid var(--ring);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .img-grid img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+    </style>
+
+    <!-- Highlight.js CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="topbar">
+        <div class="brand">Workspace</div>
+        <div class="row">
+          <button id="toggle-board" class="ghost" aria-expanded="false">
+            Reveal Board
+          </button>
+          <button id="clear-button" class="ghost hidden">Clear Board</button>
+        </div>
+      </div>
+
+      <!-- Composer (always visible) -->
+      <div class="section card">
+        <div class="compose">
+          <textarea
+            id="message-input"
+            placeholder="Write notes… (Markdown supported)"
+          ></textarea>
+
+          <div id="dropzone" class="dropzone" tabindex="0">
+            <div class="dz-left">
+              <span id="dz-label"
+                >Attach images (PNG/JPG, multiple). Drag & drop or click.</span
+              >
+            </div>
+            <div class="dz-actions">
+              <input
+                id="file-input"
+                type="file"
+                accept="image/*"
+                multiple
+                class="hidden"
+              />
+              <button id="pick-files" class="ghost" type="button">
+                Choose Files
+              </button>
+              <button id="submit-button" class="primary" type="button">
+                Save
+              </button>
+            </div>
+            <div id="upload-status" class="muted"></div>
+          </div>
+          <div id="preview"></div>
+        </div>
+      </div>
+
+      <!-- Board (hidden until revealed) -->
+      <div id="board" class="section card board hidden">
+        <div id="messages"></div>
+      </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+
+    <!-- Utils -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+
+    <script>
+      // Firebase config (as provided)
+      const firebaseConfig = {
         apiKey: "AIzaSyBWQInIKD-QiQ-GurDvz8VIFdzvA5bKks0",
         authDomain: "jiglo-47ad7.firebaseapp.com",
         projectId: "jiglo-47ad7",
@@ -125,139 +331,318 @@
         measurementId: "G-VSLLNMXXNR",
       };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
 
-    const messageInput = document.getElementById('message-input');
-    const submitButton = document.getElementById('submit-button');
-    const clearButton = document.getElementById('clear-button');
-    const messagesDiv = document.getElementById('messages');
+      // Elements
+      const toggleBoardBtn = document.getElementById("toggle-board");
+      const clearButton = document.getElementById("clear-button");
+      const board = document.getElementById("board");
+      const messagesDiv = document.getElementById("messages");
 
-    // Configure Marked.js with the highlight function
-    marked.setOptions({
-      highlight: function(code, language) {
-        const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
-        return hljs.highlight(code, { language: validLanguage, ignoreIllegals: true }).value;
+      const messageInput = document.getElementById("message-input");
+      const submitButton = document.getElementById("submit-button");
+      const fileInput = document.getElementById("file-input");
+      const pickFilesBtn = document.getElementById("pick-files");
+      const dropzone = document.getElementById("dropzone");
+      const preview = document.getElementById("preview");
+      const uploadStatus = document.getElementById("upload-status");
+
+      // Markdown + highlight config
+      marked.setOptions({
+        highlight: function (code, language) {
+          const validLanguage = hljs.getLanguage(language)
+            ? language
+            : "plaintext";
+          return hljs.highlight(code, {
+            language: validLanguage,
+            ignoreIllegals: true,
+          }).value;
+        },
+        breaks: true,
+      });
+
+      // State
+      let unsubscribeMessages = null;
+      let pendingFiles = [];
+
+      // Board toggle (stealth reveal)
+      toggleBoardBtn.addEventListener("click", () => {
+        const isHidden = board.classList.contains("hidden");
+        if (isHidden) {
+          board.classList.remove("hidden");
+          clearButton.classList.remove("hidden");
+          toggleBoardBtn.textContent = "Hide Board";
+          toggleBoardBtn.setAttribute("aria-expanded", "true");
+          startMessagesListener();
+        } else {
+          board.classList.add("hidden");
+          clearButton.classList.add("hidden");
+          toggleBoardBtn.textContent = "Reveal Board";
+          toggleBoardBtn.setAttribute("aria-expanded", "false");
+          stopMessagesListener();
+        }
+      });
+
+      function startMessagesListener() {
+        if (unsubscribeMessages) return; // already active
+        messagesDiv.innerHTML = "";
+        unsubscribeMessages = db
+          .collection("messages")
+          .orderBy("timestamp")
+          .onSnapshot((snapshot) => {
+            renderMessages(snapshot);
+          });
       }
-    });
 
-    // Function to load messages
-    function loadMessages() {
-      messagesDiv.innerHTML = '';
-      db.collection('messages').orderBy('timestamp').onSnapshot((snapshot) => {
-        messagesDiv.innerHTML = '';
+      function stopMessagesListener() {
+        if (unsubscribeMessages) {
+          unsubscribeMessages();
+          unsubscribeMessages = null;
+        }
+      }
+
+      function renderMessages(snapshot) {
+        messagesDiv.innerHTML = "";
         snapshot.forEach((doc) => {
-          const messageData = doc.data();
-          const messageDiv = document.createElement('div');
-          messageDiv.classList.add('message');
+          const data = doc.data();
+          const card = document.createElement("div");
+          card.className = "message";
 
-          // Create a copy button
-          const copyButton = document.createElement('button');
-          copyButton.textContent = 'Copy';
-          copyButton.classList.add('copy-button');
+          // Copy button
+          const copyBtn = document.createElement("button");
+          copyBtn.className = "copy-button";
+          copyBtn.textContent = "Copy";
+          copyBtn.addEventListener("click", () => copyMessageContent(card));
+          card.appendChild(copyBtn);
 
-          // Attach event listener to the copy button
-          copyButton.addEventListener('click', () => {
-            copyMessageContent(messageDiv);
-          });
+          // Content
+          const raw = data.content || "";
+          const parsed = marked.parse(raw);
+          const safeHTML = DOMPurify.sanitize(parsed);
+          const contentEl = document.createElement("div");
+          contentEl.className = "message-content";
+          contentEl.innerHTML = safeHTML;
+          card.appendChild(contentEl);
 
-          // Sanitize and parse content
-          const rawContent = messageData.content;
+          // Images grid
+          if (Array.isArray(data.images) && data.images.length) {
+            const grid = document.createElement("div");
+            grid.className = "img-grid";
+            data.images.forEach((url) => {
+              const safeUrl = DOMPurify.sanitize(url);
+              const a = document.createElement("a");
+              a.href = safeUrl;
+              a.target = "_blank";
+              a.rel = "noopener";
+              const img = document.createElement("img");
+              img.src = safeUrl;
+              img.loading = "lazy";
+              img.referrerPolicy = "no-referrer";
+              a.appendChild(img);
+              grid.appendChild(a);
+            });
+            card.appendChild(grid);
+          }
 
-          // Parse Markdown using the configured Marked.js
-          const parsedMarkdown = marked.parse(rawContent);
-          const sanitizedContent = DOMPurify.sanitize(parsedMarkdown);
+          // Timestamp
+          const ts =
+            data.timestamp && data.timestamp.toDate
+              ? data.timestamp.toDate()
+              : null;
+          const small = document.createElement("small");
+          small.textContent = ts ? ts.toLocaleString() : "Unknown time";
+          card.appendChild(small);
 
-          // Create message content element
-          const messageContentDiv = document.createElement('div');
-          messageContentDiv.classList.add('message-content');
-          messageContentDiv.innerHTML = sanitizedContent; // Use innerHTML to preserve formatting
-
-          // Create timestamp element
-          const timestampSmall = document.createElement('small');
-          const timestamp = messageData.timestamp ? messageData.timestamp.toDate().toLocaleString() : 'Unknown time';
-          timestampSmall.textContent = timestamp;
-
-          // Append elements
-          messageDiv.appendChild(copyButton);
-          messageDiv.appendChild(messageContentDiv);
-          messageDiv.appendChild(timestampSmall);
-          messagesDiv.appendChild(messageDiv);
+          messagesDiv.appendChild(card);
         });
-      });
-    }
+      }
 
-    // Function to copy message content
-    function copyMessageContent(messageDiv) {
-      const messageContentDiv = messageDiv.querySelector('.message-content');
-      const range = document.createRange();
-      range.selectNodeContents(messageContentDiv);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
+      async function copyMessageContent(wrapper) {
+        const content = wrapper.querySelector(".message-content");
+        if (!content) return;
+        // Prefer Clipboard API
+        const temp = document.createElement("div");
+        temp.innerHTML = content.innerText; // copy as plain text for reliability
+        const text = temp.textContent || temp.innerText || "";
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return;
+          }
+        } catch (e) {
+          /* fall back below */
+        }
 
-      try {
-        document.execCommand('copy');
+        const range = document.createRange();
+        range.selectNodeContents(content);
+        const selection = window.getSelection();
         selection.removeAllRanges();
-        <!-- alert('Message copied to clipboard!'); -->
-      } catch (err) {
-        console.error('Failed to copy:', err);
-        alert('Failed to copy message content.');
+        selection.addRange(range);
+        try {
+          document.execCommand("copy");
+        } catch (err) {
+          console.error("Copy failed:", err);
+        } finally {
+          selection.removeAllRanges();
+        }
       }
-    }
 
-    // Load messages on page load
-    loadMessages();
+      // File picking / dropzone
+      pickFilesBtn.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", handleFiles);
 
-    // Submit button event listener
-    submitButton.addEventListener('click', () => {
-      const content = messageInput.value.trim();
-      if (!content) return;
-
-      // Save message to Firestore
-      db.collection('messages').add({
-        content: content,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      }).then(() => {
-        messageInput.value = '';
-        // Message will appear automatically due to real-time listener
-      }).catch((error) => {
-        console.error('Error adding message: ', error);
+      ["dragenter", "dragover"].forEach((evt) =>
+        dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.background = "#f3f4f6";
+        })
+      );
+      ["dragleave", "drop"].forEach((evt) =>
+        dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.style.background = "#fafafa";
+        })
+      );
+      dropzone.addEventListener("drop", (e) => {
+        const dt = e.dataTransfer;
+        if (!dt || !dt.files) return;
+        const files = Array.from(dt.files);
+        addPendingFiles(files);
       });
-    });
 
-    // Clear button event listener
-    clearButton.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all messages?')) {
-        // Delete all messages
-        db.collection('messages').get().then((querySnapshot) => {
-          const batch = db.batch();
-          querySnapshot.forEach((doc) => {
-            batch.delete(doc.ref);
+      function handleFiles(e) {
+        const files = Array.from(e.target.files || []);
+        addPendingFiles(files);
+      }
+
+      function addPendingFiles(files) {
+        const imgs = files.filter((f) => f.type.startsWith("image/"));
+        if (!imgs.length) return;
+        pendingFiles = pendingFiles.concat(imgs);
+        renderPreview();
+      }
+
+      function renderPreview() {
+        preview.innerHTML = "";
+        pendingFiles.forEach((file, idx) => {
+          const url = URL.createObjectURL(file);
+          const wrap = document.createElement("div");
+          wrap.className = "thumb";
+          const img = document.createElement("img");
+          img.src = url;
+          img.alt = file.name;
+          const remove = document.createElement("button");
+          remove.textContent = "Remove";
+          remove.addEventListener("click", () => {
+            pendingFiles.splice(idx, 1);
+            renderPreview();
           });
-          return batch.commit();
-        }).then(() => {
-          // Messages will be removed automatically due to real-time listener
-        }).catch((error) => {
-          console.error('Error deleting messages: ', error);
+          wrap.appendChild(img);
+          wrap.appendChild(remove);
+          preview.appendChild(wrap);
         });
       }
-    });
 
-    // Auto-resize textarea (optional)
-    messageInput.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = (this.scrollHeight) + 'px';
-    });
+      // Submit
+      submitButton.addEventListener("click", async () => {
+        const content = messageInput.value.trim();
+        if (!content && pendingFiles.length === 0) return;
 
-    // Submit on Enter key (optional)
-    messageInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        submitButton.click();
+        setBusy(true);
+        try {
+          // Pre-create doc id so uploads live under it
+          const docRef = db.collection("messages").doc();
+          const imageUrls = await uploadImages(docRef.id, pendingFiles);
+
+          await docRef.set({
+            content: content,
+            images: imageUrls,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+
+          // Reset composer
+          messageInput.value = "";
+          pendingFiles = [];
+          preview.innerHTML = "";
+          fileInput.value = "";
+          uploadStatus.textContent = "";
+        } catch (err) {
+          console.error("Save failed", err);
+          alert("Failed to save. See console for details.");
+        } finally {
+          setBusy(false);
+        }
+      });
+
+      async function uploadImages(docId, files) {
+        if (!files || !files.length) return [];
+        const uploads = files.map((file, i) => {
+          const safeName = (file.name || "image").replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+          );
+          const path = `uploads/${docId}/${Date.now()}_${i}_${safeName}`;
+          const ref = storage.ref().child(path);
+          return ref.put(file).then((snap) => snap.ref.getDownloadURL());
+        });
+
+        // Track progress in a coarse way
+        let completed = 0;
+        uploads.forEach((p) =>
+          p.then(() => {
+            completed++;
+            uploadStatus.textContent = `Uploading images… ${completed}/${files.length}`;
+          })
+        );
+
+        const urls = await Promise.all(uploads);
+        uploadStatus.textContent = "";
+        return urls;
       }
-    });
-  </script>
-</body>
+
+      function setBusy(busy) {
+        submitButton.disabled = !!busy;
+        pickFilesBtn.disabled = !!busy;
+        toggleBoardBtn.disabled = !!busy;
+        clearButton.disabled = !!busy;
+        submitButton.textContent = busy ? "Saving…" : "Save";
+      }
+
+      // Clear all (board must be visible to avoid accidental use)
+      clearButton.addEventListener("click", async () => {
+        if (!confirm("Clear the entire board? This deletes all notes.")) return;
+        setBusy(true);
+        try {
+          const snap = await db.collection("messages").get();
+          const batch = db.batch();
+          snap.forEach((doc) => batch.delete(doc.ref));
+          await batch.commit();
+          messagesDiv.innerHTML = "";
+        } catch (e) {
+          console.error("Delete failed", e);
+          alert("Failed to clear board.");
+        } finally {
+          setBusy(false);
+        }
+      });
+
+      // Autosize textarea (minimal)
+      messageInput.addEventListener("input", function () {
+        this.style.height = "auto";
+        this.style.height = this.scrollHeight + "px";
+      });
+
+      // Submit on Enter (no Shift)
+      messageInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          submitButton.click();
+        }
+      });
+    </script>
+  </body>
 </html>
