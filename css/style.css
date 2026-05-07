@@ -345,6 +345,40 @@ button:hover {
   transform: translateY(-1px);
 }
 
+/* ---------- Back link ---------- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 880px;
+  margin: 2.5rem auto 0;
+  padding: 0 1.5rem;
+  width: 100%;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--accent);
+  border-bottom: none;
+  transform: translateX(-3px);
+}
+
+.back-link::before {
+  content: '←';
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+body > .back-link + h1 {
+  padding-top: 1rem;
+}
+
 /* ---------- Videos page ---------- */
 .video-title {
   text-align: center;
